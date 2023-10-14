@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers</title>
+    <style>
+       
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+       
+        header {
+            background-color: #F5631A;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+     
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px #F5631A(0, 0, 0, 0.2);
+        }
+
+       
+        .career-list {
+            margin-top: 20px;
+        }
+
+        .career-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .career-item:last-child {
+            border-bottom: none;
+        }
+
+       
+        .career-details {
+            font-size: 18px;
+        }
+
+        .career-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #F5631A;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #F5631A;
+        }
+
+        .btn-danger {
+            background-color: #DC3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #bb2a38;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Career Management</h1>
+       
+    </header>
+
+    <div class="container">
+        <h2>Career List</h2>
+        <div class="career-list">
+            <div class="career-item">
+                <div class="career-details">
+                    <p><strong>Position:</strong> Pastry Chef</p>
+                    <p><strong>Location:</strong> Cafe Miron,Embilipitiya</p>
+                    <p><strong>Description:</strong> We are looking for experienced pastry Chef to join our team...</p>
+                </div>
+                <div class="career-actions">
+                    <button class="btn btn-primary">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <!-- Add more career items as needed -->
+        </div>
+    </div>
+</body>
+</html>

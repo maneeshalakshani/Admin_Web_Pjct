@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .food-item {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .food-details {
+            flex: 1;
+        }
+
+        .food-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .food-description {
+            color: #777;
+        }
+
+        .food-count {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .add-button {
+            background-color: #FF5722;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .add-button:hover {
+            background-color: #E64A19;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Menu</h1>
+        <div class="food-item">
+            <div class="food-details">
+                <div class="food-name">Burger</div>
+                <div class="food-description"></div>
+            </div>
+            <div class="food-count">2</div>
+            <button class="add-button">Add</button>
+        </div>
+        <div class="food-item">
+            <div class="food-details">
+                <div class="food-name">Milk Shake</div>
+                <div class="food-description"></div>
+            </div>
+            <div class="food-count">3</div>
+            <button class="add-button">Add</button>
+        </div>
+        <!-- Add more food items here -->
+    </div>
+</body>
+</html>

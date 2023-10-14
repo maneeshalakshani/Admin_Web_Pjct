@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #E64A19;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px #E64A19(0, 0, 0, 0.2);
+        }
+
+        /* Notification list styles */
+        .notification-list {
+            margin-top: 20px;
+        }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Notification details styles */
+        .notification-details {
+            font-size: 18px;
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #E64A19;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #E64A19;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Notifications</h1>
+       
+    </header>
+
+    <div class="container">
+        <h2>Notification List</h2>
+        <div class="notification-list">
+            <div class="notification-item">
+                <div class="notification-details">
+                    <p><strong>Notification Type:</strong> New Order</p>
+                    <p><strong>Date:</strong> 2023-10-07</p>
+                    <p><strong>Time:</strong> 08:00</p>
+                    <p><strong>Message:</strong> You have a new order for 4 Burgers </p>
+                </div>
+                <button class="btn btn-primary">Mark as Read</button>
+            </div>
+            <!-- Add more notification items as needed -->
+        </div>
+    </div>
+</body>
+</html>
