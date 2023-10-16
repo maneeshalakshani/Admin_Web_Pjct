@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ </title>
+    <style>
+       
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+       
+        header {
+            background-color: #F5631A;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        
+        .faq-list {
+            margin-top: 20px;
+        }
+
+        .faq-item {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+       
+        .faq-question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .faq-answer {
+            font-size: 16px;
+            margin-left: 20px;
+        }
+
+     
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #F5631A;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #F5631A;
+        }
+
+        .btn-danger {
+            background-color: #DC3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #bb2a38;
+        }
+
+        .input-style {
+            margin: 10px;
+            width: 95%;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); 
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+    <!-- Firebase App SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+    <!-- Firebase Realtime Database SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+    <!-- Firebase Firestore SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+    <!-- Your JavaScript file (index.js) -->
+    <script type="module" src="scripts/Report.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Reports</h1>
+       
+    </header>
+
+    <div class="container">
+        <h2>Delivered Order Report</h2>
+        <div class="faq-list" id="faqList"></div>
+        <div class="faq-actions">
+            <button class="btn btn-primary" id="generatePdfButton">Download Report</button>
+            <div id="report-table">No Data</div>
+        </div>
+    </div>
+
+    <script src="dependencies/html2pdf.bundle.min.js"></script>
+</body>
