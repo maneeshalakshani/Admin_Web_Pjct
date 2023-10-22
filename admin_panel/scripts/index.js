@@ -1,5 +1,5 @@
 import { get, ref, child, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import { db, firestoreDB, auth } from './configurations.js';
 
@@ -31,50 +31,94 @@ function getAllOrders() {
 
             let completedOrdersCount = 0;
 
-            table.innerHTML = '<tr><th>Order</th><th>Quantity</th><th>Price</th><th>Order Status</th><th>Action</th></tr>';
+            table.innerHTML = `
+            <tr>
+                <th>Order</th>
+                <th>Username</th>
+                <th>Address</th>
+                <th>Price</th>
+                <th>Order Status</th>
+                <th>Action</th>
+            </tr>`;
 
             for (const key in data) {
                 if (data.hasOwnProperty(key)) {
                     const order = data[key];
-                    const row = table.insertRow(-1);
 
-                    const titleCell = row.insertCell(0);
-                    const quantityCell = row.insertCell(1);
-                    const priceCell = row.insertCell(2);
-                    const orderStatusCell = row.insertCell(3);
-                    const actionCell = row.insertCell(4);
 
-                    titleCell.innerHTML = order.quantity + " * " + order.title;
+                    const usersCollection = collection(firestoreDB, "users");
+                    const userDocRef = doc(usersCollection, order.userid);
 
-                    // Create a dropdown for changing order status
-                    const orderStatusDropdown = document.createElement("select");
-                    orderStatusDropdown.className = "order-status-dropdown"; // Add a class for styling
-                    orderStatusDropdown.innerHTML = `
-                        <option value="pending" ${order.orderStatus.toLowerCase() === 'pending' ? 'selected' : ''}>Pending</option>
-                        <option value="completed" ${order.orderStatus.toLowerCase() === 'completed' ? 'selected' : ''}>Completed</option>
-                        <option value="shipped" ${order.orderStatus.toLowerCase() === 'shipped' ? 'selected' : ''}>Shipped</option>
-                    `;
-                    orderStatusCell.appendChild(orderStatusDropdown);
+                    getDoc(userDocRef)
+                    .then((docSnapshot) => {
+                        if (docSnapshot.exists()) {
+                            const userData = docSnapshot.data();
+                            if (userData && userData.userName) {
+                                const userName = userData.userName;
+                                const userAddress = userData.residentialAddress;
+                                
+                                const row = table.insertRow(-1);
 
-                    quantityCell.innerHTML = order.quantity;
-                    priceCell.innerHTML = "LRK " + order.price + ".00";
+                                const titleCell = row.insertCell(0);
+                                const userNameCell = row.insertCell(1);
+                                const addressCell = row.insertCell(2);
+                                const priceCell = row.insertCell(3);
+                                const orderStatusCell = row.insertCell(4);
+                                const actionCell = row.insertCell(5);
 
-                    // Button to update order status
-                    const updateStatusButton = document.createElement("button");
-                    updateStatusButton.textContent = "Update Status";
-                    updateStatusButton.classList.add("btn", "btn-primary", "update-status-button"); // Add classes for styling
-                    updateStatusButton.addEventListener("click", () => {
-                        const newStatus = orderStatusDropdown.value;
-                        updateOrderStatus(key, newStatus);
+                                titleCell.innerHTML = order.quantity + " * " + order.title;
+                                userNameCell.innerHTML = userName;
+                                addressCell.innerHTML = userAddress;
+
+                                const statusText = document.createElement("p");
+                                statusText.innerHTML = order.orderStatus;
+                                statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : 'purple';
+                                orderStatusCell.appendChild(statusText);
+
+                                // quantityCell.innerHTML = order.quantity;
+                                priceCell.innerHTML = "LRK " + order.price + ".00";
+
+                                const StatusChangeDiv = document.createElement("div");
+
+                                // Create a dropdown for changing order status
+                                const orderStatusDropdown = document.createElement("select");
+                                orderStatusDropdown.className = "order-status-dropdown";
+                                orderStatusDropdown.innerHTML = `
+                                    <option value="pending" ${order.orderStatus.toLowerCase() === 'pending' ? 'selected' : ''}>Pending</option>
+                                    <option value="completed" ${order.orderStatus.toLowerCase() === 'completed' ? 'selected' : ''}>Completed</option>
+                                    <option value="shipped" ${order.orderStatus.toLowerCase() === 'shipped' ? 'selected' : ''}>Shipped</option>
+                                `;
+
+                                // Button to update order status
+                                const updateStatusButton = document.createElement("button");
+                                updateStatusButton.textContent = "Update Status";
+                                updateStatusButton.classList.add("btn", "btn-primary", "update-status-button"); // Add classes for styling
+                                updateStatusButton.addEventListener("click", () => {
+                                    const newStatus = orderStatusDropdown.value;
+                                    updateOrderStatus(key, newStatus);
+                                });
+
+                                StatusChangeDiv.appendChild(orderStatusDropdown);
+                                StatusChangeDiv.appendChild(updateStatusButton)
+
+                                actionCell.appendChild(StatusChangeDiv);
+
+                                if (order.orderStatus.toLowerCase() === 'completed') {
+                                    completedOrdersCount++;
+                                }
+                            } else {
+                                console.log("User data does not contain a 'userName' field.");
+                            }
+                        } else {
+                            console.log("No user found with the provided ID.");
+                        }
+                        completedOrders.innerHTML = completedOrdersCount;
+                    })
+                    .catch((error) => {
+                        console.error("Error getting user by ID:", error);
                     });
-                    actionCell.appendChild(updateStatusButton);
-
-                    if (order.orderStatus.toLowerCase() === 'completed') {
-                        completedOrdersCount++;
-                    }
                 }
             }
-            completedOrders.innerHTML = completedOrdersCount;
         } else {
             alert("No data found");
         }
