@@ -1,0 +1,248 @@
+/* Reset some default styles for better consistency */
+body, h1, h2, p {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(
+      to right,
+      
+      chocolate,
+      orange,
+      white
+   ) ;
+}
+
+/* Header styles */
+.header {
+height: 18vh;
+  background-color:black;
+  color: #ffffff;
+
+  text-align: center;
+}
+
+.logo-image {
+
+  border-radius: 0.5rem ;
+  max-width: 100px;
+  height: auto;
+  position: relative;
+  top: -15vh;
+  right: 45%;
+  
+  
+}
+
+.header-name{
+  color:aliceblue;
+  font-family: 'Segoe UI';
+  font-size: 500%;
+  position: relative;
+  top: 10%;
+}
+
+.social-icon {
+  width: 30px;
+  height: 30px;
+  margin-left: 92%;
+  position: relative;
+  bottom:30vh ;
+
+}
+
+/* Main content styles */
+.main-content {
+  padding: 20px;
+}
+
+.intro-section {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.main-image {
+  /* max-width: 100%;
+  width: 80%; */
+  /* height: auto; */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.menu{
+  width: 100%;
+  padding: 70px 0;
+}
+
+.menu_btn{
+    
+  margin-top: 20px;  
+  color: aliceblue;
+  background: chocolate;
+  padding: 8px 10px;
+  transition: 0.3s;
+}
+
+.menu h1{
+  font-size: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  color: aliceblue;
+}
+
+h2{
+  color: aliceblue;
+}
+
+.menu h1 span{
+color: aliceblue;
+margin-left: 15px; 
+font-family: mv boli; 
+}
+
+.tagline-paragraph {
+  font-size: 18px;
+  margin: 10px 0;
+  color: aliceblue;
+}
+
+.menu-section{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Menu section styles */
+.menu-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
+  gap: 20px; /* Spacing between columns */
+}
+
+.category {
+  background-color: black; /* The last value (0.5) controls opacity (0.0 to 1.0) */
+  padding: 30px 20px;
+  margin: 10px 0;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  
+}
+
+.category-title {
+  font-size: 24px;
+  color: aliceblue;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.category-description {
+  text-align: center;
+  font-size: 16px;
+  margin: 20px 0;
+  color: aliceblue;
+}
+
+/* About section styles */
+.about-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: aliceblue;
+}
+
+.about-heading {
+  font-size: 28px;
+  color: black;
+  margin: 20px 0;
+}
+
+.about-description {
+  font-size: 16px;
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+/* Contact section styles */
+.contact-heading {
+  font-size: 28px;
+  color: black;
+  margin: 20px 0;
+}
+
+/* Add styles for the new .qr2-container */
+.qr2-container {
+  float: right;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 1px; /* Adjust the margin to control the spacing between the contact info and qr2 image */
+  margin-right: 100px;
+}
+
+/* Modify the .contact-details styles */
+.contact-details {
+  float: left; /* Make the contact info div float to the left */
+  width: 60%; /* Adjust the width as needed */
+}
+
+
+.contact-title {
+  font-weight: bold;
+}
+
+.open-hours-title {
+  margin-top: 10px;
+}
+
+/* Footer styles */
+.footer {
+  background-color: #34495e;
+  color: #ffffff;
+  text-align: center;
+  padding: 15% 0;
+}
+
+.privacy-policy-link, .terms-and-conditions-link {
+  margin: 0 20px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.site-credit {
+  font-size: 14px;
+}
+
+
+.social-links{
+  position: relative;
+  top: 30vh;
+  right: 92%;
+}
+.footer{
+  background-color: black;
+}
+
+/* Responsive styles (adjust as needed) */
+@media (max-width: 768px) {
+  .social-icons-container {
+      text-align: center;
+  }
+  .social-icon {
+      margin: 0 5px;
+  }
+  .main-image {
+      border-radius: 0;
+  }
+}
+
+/* Add your own media queries and additional styles as needed for responsiveness. */

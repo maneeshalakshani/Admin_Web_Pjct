@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers</title>
+    <style>
+       
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+       
+        header {
+            background-color: #F5631A;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+     
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px #F5631A(0, 0, 0, 0.2);
+        }
+
+       
+        .career-list {
+            margin-top: 20px;
+        }
+
+        .career-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .career-item:last-child {
+            border-bottom: none;
+        }
+
+       
+        .career-details {
+            font-size: 18px;
+        }
+
+        .career-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #F5631A;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #F5631A;
+        }
+
+        .btn-danger {
+            background-color: #DC3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #bb2a38;
+        }
+
+        .input-style {
+            margin: 10px;
+            width: 95%;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); 
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin: 10px;
+        }
+
+        .input-label{
+            margin-left: 10px;
+        }
+    </style>
+    <!-- Firebase App SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+    <!-- Firebase Realtime Database SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+    <!-- Firebase Firestore SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+    <!-- Your JavaScript file (index.js) -->
+    <script type="module" src="scripts/Career.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Career Management</h1>
+       
+    </header>
+
+    <div class="container">
+        <!-- Add Career button -->
+        <button id="addCareerButton" class="btn btn-primary" style="position: absolute; top: 20px; right: 20px; background-color: #559840;">Add Career</button>
+
+        <!-- Add Career form -->
+        <form id="addCareerForm" style="display: none; margin-bottom: 50px;">
+            <h2>Add Career</h2>
+            <label for="addUsername" class="input-label">Position:</label>
+            <input type="text" id="addUsername" class="input-style" required>
+            <label for="addEmail" class="input-label">Needed years of Experience:</label>
+            <input type="number" id="addEmail" class="input-style" required>
+            <label for="addPhone" class="input-label">Qualifications :</label>
+            <input type="text" id="addPhone" class="input-style" required>
+            <button type="button" id="addCareerFormSubmitButton" class="btn btn-primary" style="margin-top: 30px;">Add</button>
+            <button type="button" id="cancelAddCareerButton" class="btn btn-danger">Cancel</button>
+            <div id="addCareerErrorMessage" class="error-message"></div>
+        </form>
+
+        <form id="editUserForm" style="display: none; margin-bottom: 50px;">
+            <h2>Edit Career</h2>
+            <label for="editUsername" class="input-label">Position:</label>
+            <input type="text" id="editUsername" class="input-style" required>
+            <label for="editEmail" class="input-label">Needed years of Experience:</label>
+            <input type="email" id="editEmail" class="input-style" required>
+            <label for="editPhone" class="input-label">Qualifications :</label>
+            <input type="tel" id="editPhone" class="input-style" required>
+            <button type="button" id="updateUserButton" class="btn btn-primary" style="margin-top: 30px;">Update</button>
+            <button type="button" id="cancelEditButton" class="btn btn-danger">Cancel</button>
+        </form>
+        <div id="errorMessage" class="error-message"></div>
+
+        <h2>Career List</h2>
+        <div class="career-list" id="career-list">
+            No Data...            
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+*,::after,::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+ }   
+ body{
+    margin: 20px;
+    background-color: black ;
+ }
+
+.menu{
+    width: 100%;
+    padding: 20px 0;
+}
+
+.menu h1{
+    font-size: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    color: aliceblue;
+}
+
+h2{
+    color: aliceblue;
+    font-size: medium;
+}
+
+.menu h1 span{
+ color: chocolate;
+ margin-left: 15px; 
+ font-family: mv boli; 
+}
+
+.menu h1 span::after{
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: chocolate;
+    display: block;
+    position: relative;
+    bottom: 15px;
+}
+
+.menu .menu_box{
+    width: 95%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 15px;
+}
+
+.menu .menu_box .menu_card{
+    width: 325px;
+    height: 350px;
+}
+
+.menu .menu_box .menu_card .menu_info .menu_btn{
+    
+    
+    color: aliceblue;
+    background: chocolate;
+    padding: 8px 10px;
+    transition: 0.3s;
+}
+
+.menu .menu_box .menu_card .menu_image img{
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  overflow: hidden;  
+}
+
+.menu .menu_box .menu_card .menu_img{
+    width: 150px;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: 0.3s;
+}
+
+.menu .menu_box .menu_card .menu_image:hover img{
+    transform: scale(1.1);
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0px 50px;
+  }
+  
+.item {
+    width: 23%;
+    margin-bottom: 20px;
+    border: 0.5px solid #cccccc65;
+    border-radius: 10px;
+    padding: 30px 30px;
+    text-align: center;
+    transition: box-shadow 0.5s;
+}
+
+.item:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: rgba(240, 248, 255, 0.177);
+}
+
+p{
+    line-height: 2;
+}
+
+.product-title{
+    font-size: 20px;
+}

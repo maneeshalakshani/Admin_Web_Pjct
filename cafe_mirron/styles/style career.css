@@ -1,0 +1,217 @@
+/* CSS Reset */
+html, body, div, h1, h2, h3, p, ul, li, a, img, hr {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+
+}
+
+/* General Styles */
+body {
+   
+    background: linear-gradient(
+        to right,
+        black,
+        chocolate,
+        orange,
+        white
+     ) ;
+}
+
+/* Navigation Bar */
+.nav{
+           
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    right: 0;
+    left: 0;
+    background-color: black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+ }
+
+ .nav .logo img{
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  margin: 7px 0;
+ }
+
+ .nav a:hover{
+    color: chocolate;
+    transition: .4s;
+ }
+ .nav ul{
+    display: flex;
+    list-style: none;
+ }
+ .nav ul li{
+  display: inline-block;
+  margin: 0 15px;
+ }
+ .nav ul li a{
+  text-decoration: none;
+  color: aliceblue;
+  font-weight: 500;
+  font-size: 17px;  
+ }
+
+ .nav ul li a::after{
+    content: '';
+    width: 0;
+    height: 2px;
+    background-color: chocolate;
+    display: block;
+    transition: 0.2s linear;
+ }
+
+ .nav ul li a:hover::after{
+    width: 100%;
+ }
+
+/* Content Section */
+.content-items img {
+    width: 80vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    align-items: right ;
+    border-radius: 50px;
+    margin-left: 140px;
+    
+    
+}
+
+/* WhatsApp Icon */
+.whatsapp img {
+    width: 50px;
+    height: 100px;
+    position: absolute;
+    top: 20px;
+    left: 40px;
+}
+
+/* Description Section */
+.des {
+    text-align: center;
+    color: #1b1b1b;
+    padding-top: 4%;
+    
+}
+.des1{
+    color: #1b1b1b;
+    font-size: larger;
+    padding-top:4%;
+    
+}
+.des2{
+    color: #1b1b1b;
+    padding-left: 20%;
+    padding-top: 4%;
+}
+.des3{
+    color:#1b1b1b;
+    padding-top: 3%;
+    
+    
+
+}
+.des4{
+    color: #1b1b1b;
+    padding-left: 20%;
+
+}
+
+button {
+    padding: 10px 20px;
+    background-color: chocolate;
+    color: aliceblue;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px; /* Add some space between buttons */
+    text-align: center;
+}
+
+/* Footer Section */
+.footer {
+    margin-top: 150px;
+    width: 100%;
+    padding: 100px 15%;
+    background: black;
+    color: aliceblue;
+    display: flex;
+    justify-content: space-between; /* Distribute items evenly */
+    
+}
+
+.footer div {
+    text-align: center;
+    font-size: larger;
+}
+
+.col-2 {
+    flex-grow: 2;
+    padding-bottom: 30px;
+}
+.col-3 {
+    flex-grow: 2;
+}
+
+/* Horizontal Rule Styles */
+hr.hr,
+hr.hr2 {
+    width: 40%;
+    position: relative;
+    margin-left: 30%; /* Adjust as needed */
+    margin-top: 0;
+    border: none;
+    background-color: rgb(255, 255, 255);
+    height: 1px;
+}
+.CafeLogo{
+    width: 50px;
+    height: 50px;
+    
+
+    padding-top: 10px;
+
+    
+    
+
+}
+
+.career-box{
+    background-color: black;
+    padding: 15px 50px;
+    margin: 20px 50px;
+    border-radius: 30px;
+    position: relative;
+}
+
+.position{
+    font-size: 25px;
+}
+
+.careerRow{
+    margin: 10px 0;
+}
+
+.fontNormal{
+    font-size: 18px;
+    letter-spacing: 2;
+}
+
+.labelBox{
+    width: 200px;
+}   
+
+.alignment{
+    position: absolute;
+    right: 30px;
+    bottom: 50px;
+
+}

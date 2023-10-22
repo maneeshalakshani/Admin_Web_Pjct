@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style menu.css">
+    <title>Cafe Miron - Your Perfect Cafe</title>
+
+    <!-- Firebase App SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+    <!-- Firebase Realtime Database SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+    <!-- Firebase Firestore SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+    <script type="module" src="scripts/Menu.js"></script>
+</head>
+
+<body>
+    <div class="header" id="header-container">
+        <h1 class="header-name">Cafe Miron</h1>
+        <div class="logo" id="logo-container">
+
+            <img class="logo-image" src="images/cf.jpg" alt="Cafe Miron Logo" id="logo-image">
+
+            <div class="social-icons" id="social-icons-container">
+                <a href="https://www.facebook.com/cafemiron?mibextid=ZbWKwL">
+                    <img class="social-icon" src="images/fb2.png" alt="Facebook Icon" id="facebook-icon">
+                </a>
+                <a href="https://wa.me/1234567890">
+                    <img class="social-icon" src="images/whp.png" alt="WhatsApp Icon" id="whatsapp-icon">
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="menu-items" id="menu-items-container" style="margin: 0 100px;">
+        <!-- Menu items will be inserted here dynamically -->
+
+
+        <div class="intro-section" id="intro-section-container">
+            <img class="main-image" src="images/photo7.jpg" alt="Cafe Miron Main Image" id="main-image">
+            <h1 class="cafe-name" id="cafe-name-heading">Cafe Miron</h1>
+            <div class="divider" id="divider-line"></div>
+            <p class="tagline" id="tagline-paragraph">The Pleasure of Variety on Your Plate</p>
+        </div>
+        <div class="menu-section" id="menu-section-container">
+            <div class="category" id="category-pastry">
+                <p class="category-title" id="category-title-pastry">Pastries</p>
+                <img class="main-image" src="images/pps.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                <p class="category-description" id="category-description-pastry">Delicious pastries to satisfy your
+                    cravings.</p>
+                    <a href="burger.html#chicken-list" class="menu_btn" id="navigate-BTN-pastry">View List</a>
+            </div>
+            <div class="category" id="category-pastry">
+                <p class="category-title" id="category-title-pastry">Pastries</p>
+                <img class="main-image" src="images/pps.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                <p class="category-description" id="category-description-pastry">Delicious pastries to satisfy your
+                    cravings.</p>
+                    <a href="burger.html#chicken-list" class="menu_btn" id="navigate-BTN-pastry">View List</a>
+            </div>
+            <div class="category" id="category-pastry">
+                <p class="category-title" id="category-title-pastry">Pastries</p>
+                <img class="main-image" src="images/pps.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                <p class="category-description" id="category-description-pastry">Delicious pastries to satisfy your
+                    cravings.</p>
+                    <a href="burger.html#chicken-list" class="menu_btn" id="navigate-BTN-pastry">View List</a>
+            </div>
+        </div>
+        <!-- <div class="menu-section" id="menu-section-container">
+            <div class="menu-row">
+                <div class="category" id="category-pastry">
+                    <p class="category-title" id="category-title-pastry">Pastries</p>
+                    <img class="main-image" src="images/pps.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-pastry">Delicious pastries to satisfy your
+                        cravings.</p>
+                        <a href="burger.html#chicken-list" class="menu_btn" id="navigate-BTN-pastry">View List</a>
+                </div>
+                <div class="category" id="category-burger">
+                    <p class="category-title" id="category-title-burger">Burgers</p>
+                    <img class="main-image" src="images/burgres.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-burger">Juicy and flavorful burgers.</p>
+                    <a href="burger.html" class="menu_btn" id="navigate-BTN-burger">View List</a>
+                </div>
+                <div class="category" id="category-fruit-juice">
+                    <p class="category-title" id="category-title-fruit-juice">Fruit Juice</p>
+                    <img class="main-image" src="images/fj.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-fruit-juice">Fresh and healthy fruit
+                        juices.</p>
+                        <a href="burger.html" class="menu_btn" id="navigate-BTN-fj">View List</a>
+                </div>
+            </div>
+            <div class="menu-row">
+                <div class="category" id="category-ice-cream">
+                    <p class="category-title" id="category-title-ice-cream">Ice Cream</p>
+                    <img class="main-image" src="images/iii.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-ice-cream">Creamy and delightful ice
+                        creams.</p>
+                        <a href="burger.html" class="menu_btn" id="navigate-BTN-ic">View List</a>
+                </div>
+                <div class="category" id="category-milk-shake">
+                    <p class="category-title" id="category-title-milk-shake">Milkshake</p>
+                    <img class="main-image" src="images/ccm.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-milk-shake">Rich and flavorful milkshakes.
+                    </p>
+                    <a href="burger.html" class="menu_btn" id="navigate-BTN-ms">View List</a>
+                </div>
+                <div class="category" id="category-lassi">
+                    <p class="category-title" id="category-title-lassi">Lassi</p>
+                    <img class="main-image" src="images/lss.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-lassi">Refreshing lassi drinks.</p>
+                    <a href="burger.html" class="menu_btn" id="navigate-BTN-l">View List</a>
+                </div>
+            </div>
+            <div class="menu-row">
+
+                <div class="category" id="category-hot-coffee">
+                    <p class="category-title" id="category-title-hot-coffee">Hot Coffee</p>
+                    <img class="main-image" src="images/hc.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-hot-coffee">Freshly brewed hot coffee.</p>
+                    <a href="burger.html" class="menu_btn" id="navigate-BTN-hc">View List</a>
+                </div>
+
+                <div class="category" id="category-crispy-chicken">
+                    <p class="category-title" id="category-title-crispy-chicken">Crispy Chicken</p>
+                    <img class="main-image" src="images/hod.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-hot-deals">Exciting offers and deals.</p>
+                    <a href="burger.html" class="menu_btn" id="navigate-BTN-cc">View List</a>
+                </div>
+                <div class="category" id="category-fruit-salad">
+                    <p class="category-title" id="category-title-fruit-salad">Fruit Salad</p>
+                    <img class="main-image" src="images/hod.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-hot-deals">Exciting offers and deals.</p>
+                    <a href="burger.html" class="menu_btn" id="navigate-BTN-fs">View List</a>
+                </div>
+               
+                <div class="category" id="category-hot-deals">
+                    <p class="category-title" id="category-title-hot-deals">Hot Deals</p>
+                    <img class="main-image" src="images/hod.jpeg" alt="Cafe Miron Main Image" id="main-image">
+                    <p class="category-description" id="category-description-hot-deals">Exciting offers and deals.
+                    </p>
+                    <a href="burger.html" class="menu_btn" id="navigate-BTN-hd">View List</a>
+                </div>
+
+
+            </div>
+            <div>
+                <div class="menu-row">
+
+                    
+                    
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <div class="about-section" id="about-section-container" style="margin: 0 100px;">
+
+        <h2 class="about-heading" id="about-heading">About Cafe Miron</h2>
+        <p class="about-description" id="about-description">"Dream, then come to us for the food you dreamt of!" Our
+            journey from the bean to the cup started in the year 2014 when the cafe culture had not yet set its
+            footprint, and coffee was still considered a luxury. Our quest to provide a truly nice experience and brew
+            the perfect one led us to create the largest and most preferred cafe chain in Sri Lanka.</p>
+    </div>
+    <div class="contact-section" id="contact-section-container" style="margin: 0 100px;">
+        <h2 class="contact-heading" id="contact-heading">Contact Information</h2>
+        <div class="contact-details" id="contact-details-container">
+            <p class="contact-title" id="contact-title">Contacts</p>
+            <p class="contact-info" id="contact-info">
+                Cafe Miron<br>
+                Pallegama, Embilipitiya<br>
+                Tel: +94 71 7189100<br>
+                Email: mironjuice10@gmail.com
+            </p>
+            <p class="open-hours-title" id="open-hours-title">Open Hours</p>
+            <p class="open-hours-info" id="open-hours-info">Monday - Sunday: 8am - 8pm</p>
+            <p class="social-title" id="social-title">Social</p>
+        </div>
+        <div class="qr2-container">
+            <img class="about-image" src="images/frame.png" alt="About Cafe Miron" id="about-image">
+        </div>
+        <div class="social-links" id="social-links-container">
+
+            <a href="https://www.facebook.com/cafemiron?mibextid=ZbWKwL">
+                <img class="social-icon" src="images/fb2.png" alt="Facebook Icon" id="facebook-icon">
+            </a>
+            <a href="https://wa.me/1234567890">
+                <img class="social-icon" src="images/whp.png" alt="WhatsApp Icon" id="whatsapp-icon">
+            </a>
+        </div>
+    </div>
+    <div class="footer" id="footer-container">
+        <p class="privacy-policy" id="privacy-policy-link">Privacy Policy</p>
+        <p class="terms-and-conditions" id="terms-and-conditions-link">Terms & Conditions</p>
+        <p class="current-year" id="current-year">2023</p>
+        <p class="site-credit" id="site-credit">Cafe Miron - Proudly Powered by ...............</p>
+    </div>
+
+    <!-- <script type="module" src="index.js"></script> -->
+
+    <!-- <script>
+        // Add this event listener to ensure the function is called when the page is loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchDataFromFirestore();
+        });
+    </script> -->
+
+</body>
+
+</html>
