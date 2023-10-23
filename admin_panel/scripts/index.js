@@ -3,19 +3,45 @@ import { collection, getDocs, doc, getDoc } from "https://www.gstatic.com/fireba
 import { signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import { db, firestoreDB, auth } from './configurations.js';
 
-// Add an event listener for the userAccount-logout div
+//========== LOGOUT HANDLE ================================================================
 const logoutButton = document.getElementById("userAccount-logout");
+const logoutModal = document.getElementById("logoutModal");
+const confirmLogoutButton = document.getElementById("confirmLogoutButton");
+const cancelLogoutButton = document.getElementById("cancelLogoutButton");
 
+// Function to open the logout confirmation modal
 logoutButton.addEventListener("click", () => {
-    signOut(auth)
-      .then(() => {
-        window.location.href = "Login.html"; 
-      })
-      .catch((error) => {
-        console.error("Error during sign-out:", error);
-      });
+  logoutModal.style.display = "block";
 });
 
+// Function to close the logout confirmation modal
+const closeModal = () => {
+  logoutModal.style.display = "none";
+};
+
+// Handle the "Logout" button click in the modal
+confirmLogoutButton.addEventListener("click", () => {
+  // Sign out the user
+  signOut(auth)
+    .then(() => {
+      window.location.href = "Login.html";
+    })
+    .catch((error) => {
+      console.error("Error during sign-out:", error);
+    });
+
+  // Close the modal
+  closeModal();
+});
+
+// Handle the "Cancel" button click in the modal
+cancelLogoutButton.addEventListener("click", () => {
+  // Close the modal
+  closeModal();
+});
+
+
+//================ GET ALL ORDERS ===========================================================================
 function getAllOrders() {
     const dbRef = ref(db);
     const peopleRef = child(dbRef, "Orders"); 
