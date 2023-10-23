@@ -159,6 +159,7 @@
 <body>
     <div class="container">
         <h1>Manage Menu</h1>
+        <button class="add-button" id="catalogue-add-button" style="margin-bottom: 20px;">Add Menu Item</button>
         <div id="food-list">
             <div class="food-item" id="food-item">
                 <div class="food-details" id="food-detail">
@@ -193,5 +194,45 @@
             </form>
         </div>
     </div>
+
+    <!-- The Add Catalogue Modal -->
+    <div id="addCatelogueModel" class="modal">
+        <div class="modal-content">
+            <span class="close" id="catalogue-close-modal">&times;</span>
+            <h2>Add Catalogue</span></h2>
+            <form id="catalogue-form" class="food-form">
+                <div class="form-control">
+                    <div class="labelClass"><label for="thumbnail-url">Thumbnail URL</label></div>
+                    <input type="text" id="catalogue-thumbnail-url" name="thumbnail-url" class="input-field">
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="title">Title</label></div>
+                    <input type="text" id="catalogue-title" name="title" class="input-field">
+                </div>
+                <button type="submit" class="submit-button">Add Menu Item</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- The Edit Catalogue Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-edit-modal">&times;</span>
+            <h2>Edit Catalogue <span id="editCollection">...</span></h2>
+            <form id="edit-catalogue-form" class="food-form">
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-thumbnail-url">Thumbnail URL</label></div>
+                    <input type="text" id="edit-thumbnail-url" name="thumbnail-url" class="input-field">
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-title">Title</label></div>
+                    <input type="text" id="edit-title" name="title" class="input-field">
+                </div>
+                <input type="text" id="edit-title" name="title" class="input-field" style="display: none;">
+                <button type="submit" class="submit-button">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>
