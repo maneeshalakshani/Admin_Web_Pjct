@@ -1,35 +1,36 @@
 import { collection, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB } from './configurations.js';
 
-const CCCollection = collection(firestoreDB, "Crispy_Chicken_types");
-const FJCollection = collection(firestoreDB, "Fruit_Juice_Types");
-const FSCollection = collection(firestoreDB, "Fruit_Salad_Types");
-const ICCollection = collection(firestoreDB, "Icecream_Types");
-const LCollection = collection(firestoreDB, "Lassi_Types");
-const MSCollection = collection(firestoreDB, "Milkshake_Types");
-const PCollection = collection(firestoreDB, "Pastry-Types");
-const CCollection = collection(firestoreDB, "coffee_types");
-const BCollection = collection(firestoreDB, "burger_types");
+const food_types_div = document.getElementById("food-types-div");
 
-function callAll(){
-    getAllInquiries(CCCollection, "crispy-chicken-list", "Crispy Chickens");
-    getAllInquiries(FJCollection, "fruit-juice-list", "Fruit Juices");
-    getAllInquiries(FSCollection, "fruit-salad-list", "Fruit Salads");
-    getAllInquiries(ICCollection, "icecreame-list", "Ice creams");
-    getAllInquiries(LCollection, "lassi-list", "Lassies");
-    getAllInquiries(MSCollection, "milkshake-list", "Milk Shakes");
-    getAllInquiries(PCollection, "pastry-list", "Pastries");
-    getAllInquiries(CCollection, "cofee-list", "Coffees");
-    getAllInquiries(BCollection, "burgers-list","Burgers");
+function getAllFoodTypes() {
+    const Fcollection = collection(firestoreDB, "food_types");
+    getDocs(Fcollection)
+        .then((querySnapshot) => {
+            
+            querySnapshot.forEach((doc) => {
+                const inquiryData = doc.data();
+                const title = inquiryData["title"];
+                const newCollection = inquiryData["collection"];
+
+                const creatingCollection = collection(firestoreDB, newCollection);
+
+                getAllInquiries(creatingCollection, `${title}-list`, title);
+            });
+        })
+        .catch((error) => {
+            console.error("Error getting inquiries:", error);
+        });
 }
 
 function getAllInquiries(collection, listId, title) {
     getDocs(collection)
         .then((querySnapshot) => {
-            const inquiryList = document.getElementById(listId);
-            inquiryList.innerHTML = "";
+            const mainDiv = document.createElement("div");
 
-            inquiryList.innerHTML = `<div style='margin-left: 10px; text-decoration: underline;'><h3>${title}</h3></div>`;
+            const fTitle = document.createElement("div");
+            fTitle.innerHTML = `<h3>${title}</h3>`;
+            mainDiv.appendChild(fTitle);
 
             querySnapshot.forEach((doc) => {
                 const inquiryData = doc.data();
@@ -81,7 +82,9 @@ function getAllInquiries(collection, listId, title) {
                 inquiryItem.appendChild(inquiryDetails);
                 inquiryItem.appendChild(inquiryActions);
 
-                inquiryList.appendChild(inquiryItem);
+                mainDiv.appendChild(inquiryItem);
+
+                food_types_div.appendChild(mainDiv);
             });
         })
         .catch((error) => {
@@ -99,9 +102,10 @@ function deleteInquiry(inquiryId, collection) {
     .catch((error) => {
         console.error("Error deleting : ", error);
     });
-}      
+}   
 
 
 window.onload = function () {
-    callAll();
+    // callAll();
+    getAllFoodTypes();
 };

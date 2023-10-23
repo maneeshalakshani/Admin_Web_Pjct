@@ -86,7 +86,7 @@ function getAllOrders() {
                                 orderStatusDropdown.innerHTML = `
                                     <option value="pending" ${order.orderStatus.toLowerCase() === 'pending' ? 'selected' : ''}>Pending</option>
                                     <option value="completed" ${order.orderStatus.toLowerCase() === 'completed' ? 'selected' : ''}>Completed</option>
-                                    <option value="shipped" ${order.orderStatus.toLowerCase() === 'shipped' ? 'selected' : ''}>Shipped</option>
+                                    <option value="Out Of Order" ${order.orderStatus.toLowerCase() === 'outOfOrder' ? 'selected' : ''}>Out Of Order</option>
                                 `;
 
                                 // Button to update order status
