@@ -94,6 +94,8 @@ function getAllFoodTypes() {
                 addBtn.addEventListener("click", function () {
                     document.getElementById("collection").value = collectionName;
                     document.getElementById("collection").innerHTML = collectionName;
+                    // document.getElementById("addProductCollection").value = title;
+                    document.getElementById("addProductCollection").innerHTML = title;
                     openModal(collectionName);
                 });
 
@@ -165,6 +167,7 @@ function openEditModal(collectionName, title, thumbnailUrl, docId) {
 
     // Set the existing data in the modal form
     document.getElementById("editCollection").innerHTML = collectionName;
+    document.getElementById("editCollectionName").innerHTML = title;
     document.getElementById("edit-thumbnail-url").value = thumbnailUrl;
     document.getElementById("edit-title").value = title;
     document.getElementById("edit-type-id").value = docId;
@@ -200,7 +203,7 @@ function updateCatalogueInFirestore(collectionName, thumbnailUrl, title, docId) 
         title: title,
     })
         .then(() => {
-            alert(`Catalogue item updated in the ${collectionName} collection`);
+            alert(`Catalogue item updated`);
             getAllFoodTypes();
         })
         .catch((error) => {
