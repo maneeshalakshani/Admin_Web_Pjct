@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB } from './configurations.js';
 
 function getAllFAQ() {
@@ -32,6 +32,14 @@ function getAllFAQ() {
                 const inquiryActions = document.createElement("div");
                 inquiryActions.classList.add("faq-actions");
 
+                const editButton = document.createElement("button");
+                editButton.classList.add("btn", "btn-success");
+                editButton.textContent = "Edit";
+
+                editButton.addEventListener("click", () => {
+                    openEditModal(question, answer, doc.id);
+                });
+
                 const deleteButton = document.createElement("button");
                 deleteButton.classList.add("btn", "btn-danger");
                 deleteButton.textContent = "Delete";
@@ -44,6 +52,7 @@ function getAllFAQ() {
                     }
                 });
 
+                inquiryActions.appendChild(editButton);
                 inquiryActions.appendChild(deleteButton);
 
                 faqDetails.appendChild(questionElement);
@@ -131,6 +140,58 @@ function deleteFAQ(docId) {
         console.error("Error deleting FAQ: ", error);
     });
 }  
+
+// ======== EDIT ==============================================================
+function openEditModal(question, answer, docId) {
+    const modal = document.getElementById("editModal");
+    modal.style.display = "block";
+
+    // Set the existing data in the modal form
+    document.getElementById("edit-question").value = question;
+    document.getElementById("edit-answer").value = answer;
+    document.getElementById("edit-doc-id").value = docId;
+
+}
+
+// Close the Update modal
+document.getElementById("close-edit-modal").addEventListener("click", function() {
+    const modal = document.getElementById("editModal");
+    modal.style.display = "none";
+});
+
+// Form submission for editing
+document.getElementById("edit-faq-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const question = document.getElementById("edit-question").value;
+    const answer = document.getElementById("edit-answer").value;
+    const docId = document.getElementById("edit-doc-id").value;
+
+    updateFAQInFirestore(question, answer, docId);
+
+    const modal = document.getElementById("editModal");
+    modal.style.display = "none";
+});
+
+// Function to update a catalogue item in Firestore
+function updateFAQInFirestore(question, answer, docId) {
+    const docRef = doc(firestoreDB, "FAQ", docId);
+    
+    updateDoc(docRef, {
+        answer: answer,
+        question: question,
+    })
+        .then(() => {
+            alert(`FAQ updated`);
+            getAllFAQ();
+        })
+        .catch((error) => {
+            console.error("Error updating FAQ:", error);
+        });
+}
+
+
+
 
 window.onload = function () {
     getAllFAQ();
