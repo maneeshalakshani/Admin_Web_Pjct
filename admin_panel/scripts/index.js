@@ -98,7 +98,7 @@ function getAllOrders() {
 
                                 const statusText = document.createElement("p");
                                 statusText.innerHTML = order.orderStatus;
-                                statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : 'purple';
+                                statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : order.orderStatus == 'out_for_delivery' ? '#339FFF' : 'purple';
                                 orderStatusCell.appendChild(statusText);
 
                                 // quantityCell.innerHTML = order.quantity;
@@ -109,11 +109,20 @@ function getAllOrders() {
                                 // Create a dropdown for changing order status
                                 const orderStatusDropdown = document.createElement("select");
                                 orderStatusDropdown.className = "order-status-dropdown";
-                                orderStatusDropdown.innerHTML = `
-                                    <option value="pending" ${order.orderStatus.toLowerCase() === 'pending' ? 'selected' : ''}>Pending</option>
-                                    <option value="completed" ${order.orderStatus.toLowerCase() === 'completed' ? 'selected' : ''}>Completed</option>
-                                    <option value="Out Of Order" ${order.orderStatus.toLowerCase() === 'outOfOrder' ? 'selected' : ''}>Out Of Order</option>
-                                `;
+
+                                const orderStatuses = ['pending', 'processing', 'out_for_delivery', 'completed'];
+                                const currentStatusIndex = orderStatuses.indexOf(order.orderStatus.toLowerCase());
+
+                                orderStatusDropdown.innerHTML = orderStatuses
+                                .map((status, index) => {
+                                    if (index < currentStatusIndex) {
+                                    return `<option value="${status}" disabled>${status}</option>`;
+                                    } else {
+                                    return `<option value="${status}" ${index === currentStatusIndex ? 'selected' : ''}>${status}</option>`;
+                                    }
+                                })
+                                .join('');
+
 
                                 // Button to update order status
                                 const updateStatusButton = document.createElement("button");
@@ -158,7 +167,7 @@ function updateOrderStatus(orderId, newStatus) {
     const orderRef = ref(db, `Orders/${orderId}/orderStatus`);
     set(orderRef, newStatus)
     .then(() => {
-        alert("Order status updated successfully");
+        // alert("Order status updated successfully");
         getAllOrders(); // Refresh the orders list
     })
     .catch((error) => {
