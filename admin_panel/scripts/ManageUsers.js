@@ -2,68 +2,68 @@ import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc } from "https://
 import { firestoreDB } from './configurations.js';
 
 // Function to open the "Add User" form
-function openAddUserForm() {
-    // Display the add form and hide the edit form
-    const addUserForm = document.getElementById("addUserForm");
-    addUserForm.style.display = "block";
+// function openAddUserForm() {
+//     // Display the add form and hide the edit form
+//     const addUserForm = document.getElementById("addUserForm");
+//     addUserForm.style.display = "block";
 
-    // Clear the input fields in the "Add User" form
-    document.getElementById("addUsername").value = "";
-    document.getElementById("addEmail").value = "";
-    document.getElementById("addPhone").value = "";
-    document.getElementById("addAddress").value = "";
-    document.getElementById("addPassword").value = "";
-}
+//     // Clear the input fields in the "Add User" form
+//     document.getElementById("addUsername").value = "";
+//     document.getElementById("addEmail").value = "";
+//     document.getElementById("addPhone").value = "";
+//     document.getElementById("addAddress").value = "";
+//     document.getElementById("addPassword").value = "";
+// }
 
-// Function to add a new user
-function addUser() {
-    const username = document.getElementById("addUsername").value;
-    const email = document.getElementById("addEmail").value;
-    const phone = document.getElementById("addPhone").value;
-    const address = document.getElementById("addAddress").value;
-    const password = document.getElementById("addPassword").value;
+// // Function to add a new user
+// function addUser() {
+//     const username = document.getElementById("addUsername").value;
+//     const email = document.getElementById("addEmail").value;
+//     const phone = document.getElementById("addPhone").value;
+//     const address = document.getElementById("addAddress").value;
+//     const password = document.getElementById("addPassword").value;
 
-    if (username && email && phone && address && password) {
-        // Add the new user to Firestore
-        addDoc(collection(firestoreDB, "users"), {
-            userName: username,
-            email: email,
-            phoneNumber: phone,
-            residentialAddress: address,
-            password: password,
-        })
-            .then(() => {
-                console.log("User added successfully");
-                // Hide the add form after adding
-                const addUserForm = document.getElementById("addUserForm");
-                addUserForm.style.display = "none";
+//     if (username && email && phone && address && password) {
+//         // Add the new user to Firestore
+//         addDoc(collection(firestoreDB, "users"), {
+//             userName: username,
+//             email: email,
+//             phoneNumber: phone,
+//             residentialAddress: address,
+//             password: password,
+//         })
+//             .then(() => {
+//                 console.log("User added successfully");
+//                 // Hide the add form after adding
+//                 const addUserForm = document.getElementById("addUserForm");
+//                 addUserForm.style.display = "none";
 
-                // Refresh the user list
-                getAllUsers();
-            })
-            .catch((error) => {
-                console.error("Error adding user: ", error);
-            });
-    } else {
-        // Display an error message if any of the fields is empty
-        document.getElementById("addUserErrorMessage").textContent = "Please fill in all the fields.";
-    }
-}
+//                 // Refresh the user list
+//                 getAllUsers();
+//             })
+//             .catch((error) => {
+//                 console.error("Error adding user: ", error);
+//             });
+//     } else {
+//         // Display an error message if any of the fields is empty
+//         document.getElementById("addUserErrorMessage").textContent = "Please fill in all the fields.";
+//     }
+// }
 
-// Event listener for the "Add User" button
-const addUserButton = document.getElementById("addUserButton");
-addUserButton.addEventListener("click", openAddUserForm);
+// // Event listener for the "Add User" button
+// const addUserButton = document.getElementById("addUserButton");
+// addUserButton.addEventListener("click", openAddUserForm);
 
-// Event listener for the "Add" button in the "Add User" form
-const addUserFormSubmitButton = document.getElementById("addUserFormSubmitButton");
-addUserFormSubmitButton.addEventListener("click", addUser);
+// // Event listener for the "Add" button in the "Add User" form
+// const addUserFormSubmitButton = document.getElementById("addUserFormSubmitButton");
+// addUserFormSubmitButton.addEventListener("click", addUser);
 
-// Event listener for the "Cancel" button in the "Add User" form
-const cancelAddUserButton = document.getElementById("cancelAddUserButton");
-cancelAddUserButton.addEventListener("click", () => {
-    const addUserForm = document.getElementById("addUserForm");
-    addUserForm.style.display = "none";
-});
+// // Event listener for the "Cancel" button in the "Add User" form
+// const cancelAddUserButton = document.getElementById("cancelAddUserButton");
+// cancelAddUserButton.addEventListener("click", () => {
+//     const addUserForm = document.getElementById("addUserForm");
+//     addUserForm.style.display = "none";
+// });
 
 
 function getAllUsers() {
