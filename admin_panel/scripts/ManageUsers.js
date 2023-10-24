@@ -101,14 +101,14 @@ function getAllUsers() {
                 const addressElement = document.createElement("p");
                 addressElement.innerHTML = `<strong>Address:</strong> ${address}`;
 
-                const passwordElement = document.createElement("p");
-                passwordElement.innerHTML = `<strong>Password:</strong> ${pw}`;
+                // const passwordElement = document.createElement("p");
+                // passwordElement.innerHTML = `<strong>Password:</strong> ${pw}`;
 
                 userDetails.appendChild(usernameElement);
                 userDetails.appendChild(emailElement);
                 userDetails.appendChild(phoneElement);
                 userDetails.appendChild(addressElement);
-                userDetails.appendChild(passwordElement);
+                // userDetails.appendChild(passwordElement);
 
                 const inquiryActions = document.createElement("div");
                 inquiryActions.classList.add("career-actions");
