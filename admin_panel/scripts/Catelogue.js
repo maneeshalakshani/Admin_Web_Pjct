@@ -1,5 +1,6 @@
 import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-import { firestoreDB } from './configurations.js';
+import { firestoreDB, storage } from './configurations.js';
+import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
 
 const addCatalogueBtn = document.getElementById("catalogue-add-button");
 addCatalogueBtn.addEventListener("click", function () {
@@ -127,6 +128,8 @@ function getAllFoodTypes() {
         });
 } 
 
+
+//========================= ADD PRODUCT =============================
 // Open the modal
 function openModal(collectionName) {
     const modal = document.getElementById("myModal");
@@ -143,30 +146,53 @@ document.getElementById("close-modal").addEventListener("click", function() {
 });
 
 // Form submission
-document.getElementById("food-form").addEventListener("submit", function(e) {
+document.getElementById("food-form").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    const thumbnailUrl = document.getElementById("thumbnail-url").value;
+    // const thumbnailUrl = document.getElementById("thumbnail-url").value;
     const title = document.getElementById("title").value;
     const price = document.getElementById("price").value;
     const collection = document.getElementById("collection").value; // Get collection from the form
+    const image = document.getElementById("cv").files[0];
 
-    // Add code to save the new food item data to Firebase Firestore here
-    addProductsToFirestore(thumbnailUrl, title, price, collection);
 
-    const modal = document.getElementById("myModal");
-    modal.style.display = "none";
+
+    // Prepare data to be saved in collection
+    const applicationData = {
+        ThumbnailUrl: null,
+        title: title,
+        price: price,
+        imageUrl: null,
+    };
+
+    try{
+        // Upload the CV file to a cloud storage solution (Firebase Cloud Storage)
+        const storageRef = ref(storage, 'product_image/' + image.name);
+        const snapshot = await uploadBytes(storageRef, image);
+
+        // Get the download URL for the uploaded file
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        // Update the application data with the download URL
+        applicationData.ThumbnailUrl = downloadURL;
+        applicationData.imageUrl = downloadURL;
+
+
+        // Add code to save the new food item data to Firebase Firestore here
+        addProductsToFirestore(applicationData, collection);
+
+        const modal = document.getElementById("myModal");
+        modal.style.display = "none";
+        
+    }catch(error) {
+        console.error("Error submitting application:", error);
+    }
 });
 
 // Function to add a new product to Firestore
-function addProductsToFirestore(thumbnailUrl, title, price, collectionName) {
+function addProductsToFirestore(applicationData, collectionName) {
     const productCollection = collection(firestoreDB, collectionName);
-    addDoc(productCollection, {
-        ThumbnailUrl: thumbnailUrl,
-        title: title,
-        price: price,
-        imageUrl: thumbnailUrl,
-    })
+    addDoc(productCollection, applicationData)
         .then(() => {
             alert(`Item added to the ${collectionName} collection`);
         })
