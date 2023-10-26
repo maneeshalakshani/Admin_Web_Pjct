@@ -75,6 +75,20 @@ function getAllFoodTypes() {
                 const actionDetails = document.createElement("div");
                 foodDetails.classList.add("food-action");
 
+                //delete button ======================
+                const deleteButton = document.createElement("button");
+                deleteButton.classList.add("add-button");
+                deleteButton.style.marginRight = '20px';
+                deleteButton.style.background = 'red';
+                deleteButton.textContent = "Delete";
+
+                deleteButton.addEventListener("click", function () {
+                    deleteCatalogue(doc.id);
+                });
+
+                actionDetails.appendChild(deleteButton);
+
+                //edit button 
                 const editBtn = document.createElement("button");
                 editBtn.classList.add("add-button");
                 editBtn.style.marginRight = '20px';
@@ -85,8 +99,8 @@ function getAllFoodTypes() {
                     openEditModal(collectionName, title, thumbnailUrl, doc.id);
                 });
 
-                inquiryItem.appendChild(editBtn);
 
+                //add button
                 const addBtn = document.createElement("button");
                 addBtn.classList.add("add-button");
                 addBtn.textContent = "Add";  
@@ -212,6 +226,22 @@ function updateCatalogueInFirestore(collectionName, thumbnailUrl, title, docId) 
 }
 
 
+//============ DELETE CATALOGUE ==============================================================
+function deleteCatalogue(docId) {
+    const dbRef = doc(firestoreDB, "food_types", docId);
+    deleteDoc(dbRef)
+    .then(() => {
+        alert("Deleted Successfully");
+        getAllFoodTypes();
+        console.log("Deleted successfully");
+    })
+    .catch((error) => {
+        console.error("Error deleting", error);
+    });
+}  
+
+
+//================= call all when page loads ===============================
 window.onload = function () {
     getAllFoodTypes();
 };
