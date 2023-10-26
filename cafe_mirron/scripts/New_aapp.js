@@ -19,6 +19,7 @@ async function getCareer(documentId) {
             if (documentSnapshot.exists()) {
                 const data = documentSnapshot.data();
                 populateJobApplicationForm(data);
+                document.getElementById("careerName").value = data.title;
             } else {
                 console.log("Document not found");
             }
@@ -42,6 +43,7 @@ function addApplication(documentId) {
         const pincode = document.getElementById("pincode").value;
         const date = document.getElementById("date").value;
         const cvFile = document.getElementById("cv").files[0];
+        const careerName = document.getElementById("careerName").value;
 
         // Create a reference to the "Careers" document
         const careerDocumentRef = doc(firestoreDB, "Careers", documentId);
@@ -57,6 +59,7 @@ function addApplication(documentId) {
             Date: date,
             cv: null,
             career: careerDocumentRef,
+            careerName: careerName,
         };
 
         try{
