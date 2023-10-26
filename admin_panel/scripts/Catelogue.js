@@ -219,6 +219,8 @@ function addProductsToFirestore(applicationData, collectionName) {
         });
 }
 
+
+//================  EDIT ========================================================
 function openEditModal(collectionName, title, thumbnailUrl, docId) {
     const modal = document.getElementById("editModal");
     modal.style.display = "block";
