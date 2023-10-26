@@ -97,7 +97,7 @@ function getAllOrders() {
                                 addressCell.innerHTML = userAddress;
 
                                 const statusText = document.createElement("p");
-                                statusText.innerHTML = order.orderStatus;
+                                statusText.innerHTML = order.orderStatus == 'out_for_delivery' ? "Out For Delivery" : order.orderStatus;
                                 statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : order.orderStatus == 'out_for_delivery' ? '#339FFF' : 'purple';
                                 orderStatusCell.appendChild(statusText);
 
@@ -110,7 +110,7 @@ function getAllOrders() {
                                 const orderStatusDropdown = document.createElement("select");
                                 orderStatusDropdown.className = "order-status-dropdown";
 
-                                const orderStatuses = ['pending', 'processing', 'out_for_delivery', 'completed'];
+                                const orderStatuses = ['pending', 'processing', 'completed', 'out_for_delivery'];
                                 const currentStatusIndex = orderStatuses.indexOf(order.orderStatus.toLowerCase());
 
                                 orderStatusDropdown.innerHTML = orderStatuses

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquiry</title>
+    <link rel="stylesheet" href="styles/Deals.css">
+    
+    <!-- Firebase App SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+    <!-- Firebase Realtime Database SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+    <!-- Firebase Firestore SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+    <!-- Your JavaScript file (index.js) -->
+    <script type="module" src="scripts/Deals.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Deal Management</h1>
+    </header>
+
+    <button class="btn btn-primary add-btn" id="deal-add-button" style="margin: 20px 20px 0px 20px;">Add Deal</button>
+
+    <div class="container">
+        <table id="deals-table">
+            <tbody id="deals-list"></tbody>
+        </table>
+    </div>
+
+    <!-- Edit Deal Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-edit-modal">&times;</span>
+            <h2>Edit Deal</h2>
+            <form id="edit-faq-form" class="food-form">
+                <div class="form-control" style="display: none;">
+                    <div class="labelClass"><label for="edit-question">Question</label></div>
+                    <input type="text" id="edit-imageUrl" name="edit-question" class="input-field">
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-answer">Description</label></div>
+                    <input type="text" id="edit-description" name="answer" class="input-field">
+                </div>
+                <input type="text" id="edit-doc-id" name="title" class="input-field" style="display: none;">
+                <button type="submit" class="submit-button">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Deal Modal -->
+    <div id="addDealModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-add-modal">&times;</span>
+            <h2>Add Deal</h2>
+            <form id="add-deals-form" class="food-form">
+                <div class="form-control">
+                    <div class="labelClass"><label for="add-imageUrl">ImageUrl</label></div>
+                    <input type="text" id="add-imageUrl" name="add-question" class="input-field">
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="add-description">Description</label></div>
+                    <input type="text" id="add-description" name="answer" class="input-field">
+                </div>
+                <button type="submit" class="submit-button">Add Deal</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
