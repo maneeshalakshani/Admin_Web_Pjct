@@ -15,28 +15,46 @@ document.getElementById("catalogue-close-modal").addEventListener("click", funct
 });
 
 // Form submission
-document.getElementById("catalogue-form").addEventListener("submit", function(e) {
+document.getElementById("catalogue-form").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    const thumbnailUrl = document.getElementById("catalogue-thumbnail-url").value;
+    // const thumbnailUrl = document.getElementById("catalogue-thumbnail-url").value;
     const title = document.getElementById("catalogue-title").value;
     const newCollection = `${title}_types`;
+    const catalogueImage = document.getElementById("catalogueImage").files[0];
 
-    // Add code to save the new food item data to Firebase Firestore here
-    addCatalogueToFirestore(thumbnailUrl, title, 'food_types', newCollection);
+    const applicationData = {
+        thumbnailUrl: null,
+        title: title,
+        collection: newCollection,
+    };
 
-    const modal = document.getElementById("addCatelogueModel");
-    modal.style.display = "none";
+
+    try{
+        // Upload the CV file to a cloud storage solution (Firebase Cloud Storage)
+        const storageRef = ref(storage, 'catalogue_images/' + catalogueImage.name);
+        const snapshot = await uploadBytes(storageRef, catalogueImage);
+
+        // Get the download URL for the uploaded file
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        // Update the application data with the download URL
+        applicationData.thumbnailUrl = downloadURL;
+
+        // Add code to save the new food item data to Firebase Firestore here
+        addCatalogueToFirestore(applicationData, 'food_types');
+
+        const modal = document.getElementById("addCatelogueModel");
+        modal.style.display = "none";
+    }catch(error) {
+        console.error("Error submitting application:", error);
+    }
 });
 
 // Function to add a new product to Firestore
-function addCatalogueToFirestore(thumbnailUrl, title, collectionName, newCollection) {
+function addCatalogueToFirestore(applicationData, collectionName) {
     const productCollection = collection(firestoreDB, collectionName); // Use the passed collection
-    addDoc(productCollection, {
-        thumbnailUrl: thumbnailUrl,
-        title: title,
-        collection: newCollection,
-    })
+    addDoc(productCollection, applicationData)
         .then(() => {
             alert(`Menu Item added to the ${collectionName} collection`);
             getAllFoodTypes();
