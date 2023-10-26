@@ -401,3 +401,15 @@ button {
 #cancelLogoutButton {
   background-color: #ccc;
 }
+
+.pendingOrdersBtn{
+  text-decoration: none;
+  background-color: #F5631A;
+  color: #ededed;
+  padding: 5px 20px;
+  border-radius: 10px;
+}
+
+.pendingOrdersBtn:hover {
+  background-color: #d1571a;
+}

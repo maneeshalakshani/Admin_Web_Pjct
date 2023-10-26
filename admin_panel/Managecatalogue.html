@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cafe Menu</title>
     <style>
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
@@ -145,6 +150,18 @@
             margin-top: 30px;
             margin-bottom: 10px;
         }
+
+        header {
+            background-color: #F5631A;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
     </style>
 
     <!-- Firebase App SDKs -->
@@ -157,30 +174,29 @@
     <script type="module" src="scripts/Catelogue.js"></script>
 </head>
 <body>
+    <header>
+        <h1 style="color: white;">Manage Catalogue</h1>
+       
+    </header>
     <div class="container">
-        <h1>Manage Menu</h1>
-        <button class="add-button" id="catalogue-add-button" style="margin-bottom: 20px;">Add Menu Item</button>
-        <div id="food-list">
-            <div class="food-item" id="food-item">
-                <div class="food-details" id="food-detail">
-                    <div class="food-name" id="food-name">Burger</div>
-                    <div class="food-description" id="food-description"></div>
-                </div>
-                <div class="food-count" id="food-count">2</div>
-                <button class="add-button" id="add-button">Add</button>
-            </div>
-        </div>
+        <!-- <h1>Manage Menu</h1> -->
+        <button class="add-button" id="catalogue-add-button" style="margin-bottom: 20px;">Add Catalogue Item</button>
+        <div id="food-list">No Data</div>
     </div>
 
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" id="close-modal">&times;</span>
-            <h2>Add Food Item <span id="collection">...</span></h2>
+            <h2>Add Products in <span id="collection" style="display: none;">...</span><span id="addProductCollection">...</span></h2>
             <form id="food-form" class="food-form">
-                <div class="form-control">
+                <!-- <div class="form-control">
                     <div class="labelClass"><label for="thumbnail-url">Thumbnail URL</label></div>
                     <input type="text" id="thumbnail-url" name="thumbnail-url" class="input-field">
+                </div> -->
+                <div class="form-control">
+                    <div class="labelClass"><label for="cv">Upload Product Image (PNG, JPG, JPEG)</label></div>
+                    <input type="file" id="cv" name="cv" accept=".png, .jpg, .jpeg" required>
                 </div>
                 <div class="form-control">
                     <div class="labelClass"><label for="title">Title</label></div>
@@ -201,9 +217,13 @@
             <span class="close" id="catalogue-close-modal">&times;</span>
             <h2>Add Catalogue</span></h2>
             <form id="catalogue-form" class="food-form">
-                <div class="form-control">
+                <!-- <div class="form-control">
                     <div class="labelClass"><label for="thumbnail-url">Thumbnail URL</label></div>
                     <input type="text" id="catalogue-thumbnail-url" name="thumbnail-url" class="input-field">
+                </div> -->
+                <div class="form-control">
+                    <div class="labelClass"><label for="catalogueImage">Upload Catalogue Image (PNG, JPG, JPEG)</label></div>
+                    <input type="file" id="catalogueImage" name="catalogueImage" accept=".png, .jpg, .jpeg" required>
                 </div>
                 <div class="form-control">
                     <div class="labelClass"><label for="title">Title</label></div>
@@ -218,7 +238,7 @@
     <div id="editModal" class="modal">
         <div class="modal-content">
             <span class="close" id="close-edit-modal">&times;</span>
-            <h2>Edit Catalogue <span id="editCollection">...</span></h2>
+            <h2>Edit Catalogue <span id="editCollection" style="display: none;">...</span><span id="editCollectionName">...</span></h2>
             <form id="edit-catalogue-form" class="food-form">
                 <div class="form-control">
                     <div class="labelClass"><label for="edit-thumbnail-url">Thumbnail URL</label></div>
@@ -228,7 +248,7 @@
                     <div class="labelClass"><label for="edit-title">Title</label></div>
                     <input type="text" id="edit-title" name="title" class="input-field">
                 </div>
-                <input type="text" id="edit-title" name="title" class="input-field" style="display: none;">
+                <input type="text" id="edit-type-id" name="title" class="input-field" style="display: none;">
                 <button type="submit" class="submit-button">Save Changes</button>
             </form>
         </div>
