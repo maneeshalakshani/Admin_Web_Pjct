@@ -76,66 +76,88 @@ function fetchAndDisplayCompletedOrders() {
   reportTableDiv.appendChild(table);
 }
 
+
 // Define a function to generate the PDF report
 function generatePDFReport() {
-    document.getElementById('generatePdfButton').onclick = function() {
-        
-        var element = `<div>
-            <table>
-            <thead>
-                <tr>
-                    <th>Column 1</th>
-                    <th>Column 2</th>
-                    <th>Column 3</th>
-                    <th>Column 4</th>
-                    <th>Column 5</th>
-                    <th>Column 6</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Row 1, Cell 1</td>
-                    <td>Row 1, Cell 2</td>
-                    <td>Row 1, Cell 3</td>
-                    <td>Row 1, Cell 4</td>
-                    <td>Row 1, Cell 5</td>
-                    <td>Row 1, Cell 6</td>
-                </tr>
-                <tr>
-                    <td>Row 2, Cell 1</td>
-                    <td>Row 2, Cell 2</td>
-                    <td>Row 2, Cell 3</td>
-                    <td>Row 2, Cell 4</td>
-                    <td>Row 2, Cell 5</td>
-                    <td>Row 2, Cell 6</td>
-                </tr>
-                <tr>
-                    <td>Row 3, Cell 1</td>
-                    <td>Row 3, Cell 2</td>
-                    <td>Row 3, Cell 3</td>
-                    <td>Row 3, Cell 4</td>
-                    <td>Row 3, Cell 5</td>
-                    <td>Row 3, Cell 6</td>
-                </tr>
-            </tbody>
-        </table>
-        </div>`;
+  document.getElementById('generatePdfButton').onclick = function() {
+    // Get the current date and time
+    const currentDateTime = new Date().toLocaleString();
 
-        var opt = {
-            margin: 1,
-            filename: 'report.pdf',
-            image: {type: 'jpeg', quality: 0.98},
-            html2canvas: {scale: 2},
-            jsPDF: {unit: 'in', format: 'letter', 'orientation': 'portrait'}
-        };
+    var element = `<div class="reportHead">
+        <h1 class="reportHeader">Completed Orders</h1>
+        <p class="reportDateTime">${currentDateTime}</p>
+      </div>
+      <table style="margin: 50px auto; width: 80%">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Delivery Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${getDataForReport()}            
+        </tbody>
+      </table>
+    </div>`;
 
-        html2pdf(element, opt);
+    var opt = {
+      margin: 0, // Set margin to 0
+      filename: 'Completed Orders Report.pdf',
+      image: {type: 'jpeg', quality: 0.98},
+      html2canvas: {scale: 2},
+      jsPDF: {unit: 'in', format: 'letter', 'orientation': 'portrait'}
     };
+
+    html2pdf(element, opt);
+  };
 }
+
+
+
+
+
+//generate pdf table data
+function getDataForReport() {
+  const ordersRef = ref(db, 'Orders');
+  var tBodyContent = '';
+
+  const completedOrdersQuery = query(
+    ordersRef,
+    orderByChild("orderStatus"),
+    equalTo("completed")
+  );
+
+  function addOrderToTable(order) {
+
+    var tableRow = `
+      <tr>
+        <td>${order.key}</td>
+        <td>${order.val().title}</td>
+        <td>${order.val().quantity}</td>
+        <td>LKR ${order.val().price}</td>
+        <td>${order.val().deliveryOption}</td>
+      </tr>
+    `;
+
+    tBodyContent = tBodyContent + tableRow;
+  }
+
+  onChildAdded(completedOrdersQuery, (childSnapshot) => {
+    addOrderToTable(childSnapshot);
+  });
+
+  return tBodyContent;
+}
+
+
+
 
 document.getElementById('generatePdfButton').onclick = function () {
     generatePDFReport();
-  };
+};
 
 
 
