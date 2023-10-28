@@ -1,5 +1,6 @@
 import { collection, getDocs, doc, deleteDoc, updateDoc,addDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-import { firestoreDB } from './configurations.js';
+import { firestoreDB, storage } from './configurations.js';
+import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
 
 function getAllDeals() {
     const inquiriesCollection = collection(firestoreDB, "deals");
@@ -112,29 +113,45 @@ document.getElementById("close-edit-modal").addEventListener("click", function()
 });
 
 // Form submission for editing
-document.getElementById("edit-faq-form").addEventListener("submit", function(e) {
+document.getElementById("edit-faq-form").addEventListener("submit", async function(e) {
     e.preventDefault();
 
     const description = document.getElementById("edit-description").value;
     const imageUrl = document.getElementById("edit-imageUrl").value;
     const docId = document.getElementById("edit-doc-id").value;
+    const image = document.getElementById("edit-image").files[0];
 
-    updateDealInFirestore(description, imageUrl, docId);
-
-    const modal = document.getElementById("editModal");
-    modal.style.display = "none";
-});
-
-// Function to update a catalogue item in Firestore
-function updateDealInFirestore(description, imageUrl, docId) {
-    const docRef = doc(firestoreDB, "deals", docId);
-    
-    updateDoc(docRef, {
+    const applicationData = {
         description: description,
         imageUrl: imageUrl,
-    })
+    };
+
+    try{
+        if(image != undefined){
+            // Upload the file to a cloud storage solution (Firebase Cloud Storage)
+            const storageRef = ref(storage, 'deal_images/' + image.name);
+            const snapshot = await uploadBytes(storageRef, image);
+
+            const downloadURL = await getDownloadURL(snapshot.ref);
+
+            applicationData.imageUrl = downloadURL;
+        } 
+
+        updateDealInFirestore(applicationData, docId);
+
+        const modal = document.getElementById("editModal");
+        modal.style.display = "none";
+    }catch(error) {
+        console.error("Error :", error);
+    }
+});
+
+// Function to update a Deal in Firestore
+function updateDealInFirestore(applicationData, docId) {
+    const docRef = doc(firestoreDB, "deals", docId);
+    
+    updateDoc(docRef, applicationData)
         .then(() => {
-            // alert(`Deal updated`);
             getAllDeals();
         })
         .catch((error) => {
@@ -157,26 +174,43 @@ document.getElementById("close-add-modal").addEventListener("click", function() 
 });
 
 // Form submission
-document.getElementById("add-deals-form").addEventListener("submit", function(e) {
+document.getElementById("add-deals-form").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    const thumbnailUrl = document.getElementById("add-imageUrl").value;
+    // const thumbnailUrl = document.getElementById("add-imageUrl").value;
     const description = document.getElementById("add-description").value;
+    const image = document.getElementById("image").files[0];
 
-    // Add code to save the new deal data to Firebase Firestore
-    addDealToFirestore(thumbnailUrl, description, 'deals');
+    const applicationData = {
+        imageUrl: null,
+        description: description,
+    };
 
-    const modal = document.getElementById("addDealModal");
-    modal.style.display = "none";
+    try{
+        // Upload the CV file to a cloud storage solution (Firebase Cloud Storage)
+        const storageRef = ref(storage, 'deal_images/' + image.name);
+        const snapshot = await uploadBytes(storageRef, image);
+
+        // Get the download URL for the uploaded file
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        // Update the application data with the download URL
+        applicationData.imageUrl = downloadURL;
+
+        // Add code to save
+        addDealToFirestore(applicationData, 'deals');
+
+        const modal = document.getElementById("addDealModal");
+        modal.style.display = "none";
+    }catch(error) {
+        console.error("Error :", error);
+    }
 });
 
 // Function to add a new deals to Firestore
-function addDealToFirestore(thumbnailUrl, description, collectionName) {
+function addDealToFirestore(applicationData, collectionName) {
     const productCollection = collection(firestoreDB, collectionName); // Use the passed collection
-    addDoc(productCollection, {
-        imageUrl: thumbnailUrl,
-        description: description,
-    })
+    addDoc(productCollection, applicationData)
         .then(() => {
             // alert(`Menu Deal added to the ${collectionName} collection`);
             getAllDeals();

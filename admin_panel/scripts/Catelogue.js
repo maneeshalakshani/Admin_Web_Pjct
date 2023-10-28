@@ -20,12 +20,14 @@ document.getElementById("catalogue-form").addEventListener("submit", async funct
 
     // const thumbnailUrl = document.getElementById("catalogue-thumbnail-url").value;
     const title = document.getElementById("catalogue-title").value;
+    const description = document.getElementById("catalogue-description").value;
     const newCollection = `${title}_types`;
     const catalogueImage = document.getElementById("catalogueImage").files[0];
 
     const applicationData = {
         thumbnailUrl: null,
         title: title,
+        description: description,
         collection: newCollection,
     };
 
@@ -78,21 +80,41 @@ function getAllFoodTypes() {
                 const thumbnailUrl = inquiryData["thumbnailUrl"];
                 const title = inquiryData["title"];
                 const collectionName = inquiryData["collection"];
+                const description = inquiryData["description"];
 
                 const inquiryItem = document.createElement("div");
                 inquiryItem.classList.add("food-item");
 
                 const foodDetails = document.createElement("div");
-                foodDetails.classList.add("food-detail");
+                foodDetails.classList.add("food-details");
+
+                const foodInfo = document.createElement("div");
+                foodInfo.style.marginLeft = "20px";
+
+                const thumbnailElement = document.createElement("img");
+                thumbnailElement.classList.add("product-img");
+                thumbnailElement.src = thumbnailUrl;
+                thumbnailElement.alt = "Thumbnail";
+                thumbnailElement.width = 100;
+                thumbnailElement.height = 80;
+
 
                 const foodNameElement = document.createElement("div");
                 foodNameElement.classList.add("food-name");
                 foodNameElement.innerHTML = title;
 
-                foodDetails.appendChild(foodNameElement);
+                const foodDescriptionElement = document.createElement("div");
+                foodDescriptionElement.classList.add("description-div");
+                foodDescriptionElement.innerHTML = description;
+
+                foodInfo.appendChild(foodNameElement);
+                foodInfo.appendChild(foodDescriptionElement);
+
+                foodDetails.appendChild(thumbnailElement);
+                foodDetails.appendChild(foodInfo);
 
                 const actionDetails = document.createElement("div");
-                foodDetails.classList.add("food-action");
+                actionDetails.classList.add("food-action");
 
                 //delete button ======================
                 const deleteButton = document.createElement("button");
@@ -115,7 +137,7 @@ function getAllFoodTypes() {
                 editBtn.textContent = "Edit";
 
                 editBtn.addEventListener("click", function () {
-                    openEditModal(collectionName, title, thumbnailUrl, doc.id);
+                    openEditModal(collectionName, title, thumbnailUrl, description, doc.id);
                 });
 
 
@@ -170,6 +192,7 @@ document.getElementById("food-form").addEventListener("submit", async function(e
     // const thumbnailUrl = document.getElementById("thumbnail-url").value;
     const title = document.getElementById("title").value;
     const price = document.getElementById("price").value;
+    const description = document.getElementById("product-description").value;
     const collection = document.getElementById("collection").value; // Get collection from the form
     const image = document.getElementById("cv").files[0];
 
@@ -180,6 +203,7 @@ document.getElementById("food-form").addEventListener("submit", async function(e
         ThumbnailUrl: null,
         title: title,
         price: price,
+        description: description,
         imageUrl: null,
     };
 
@@ -221,13 +245,14 @@ function addProductsToFirestore(applicationData, collectionName) {
 
 
 //================  EDIT ========================================================
-function openEditModal(collectionName, title, thumbnailUrl, docId) {
+function openEditModal(collectionName, title, thumbnailUrl, description, docId) {
     const modal = document.getElementById("editModal");
     modal.style.display = "block";
 
     // Set the existing data in the modal form
     document.getElementById("editCollection").innerHTML = collectionName;
     document.getElementById("editCollectionName").innerHTML = title;
+    document.getElementById("edit-description").value = description;
     document.getElementById("edit-thumbnail-url").value = thumbnailUrl;
     document.getElementById("edit-title").value = title;
     document.getElementById("edit-type-id").value = docId;
@@ -240,28 +265,49 @@ document.getElementById("close-edit-modal").addEventListener("click", function()
 });
 
 // Form submission for editing
-document.getElementById("edit-catalogue-form").addEventListener("submit", function(e) {
+document.getElementById("edit-catalogue-form").addEventListener("submit", async function(e) {
     e.preventDefault();
 
     const thumbnailUrl = document.getElementById("edit-thumbnail-url").value;
     const title = document.getElementById("edit-title").value;
+    const description = document.getElementById("edit-description").value;
     const collection = document.getElementById("editCollection").value;
     const docId = document.getElementById("edit-type-id").value;
+    const image = document.getElementById("edit-image").files[0];
 
-    updateCatalogueInFirestore(collection, thumbnailUrl, title, docId);
+    const applicationData = {
+        thumbnailUrl: thumbnailUrl,
+        title: title,
+        description: description,
+    };
 
-    const modal = document.getElementById("editModal");
-    modal.style.display = "none";
+    try{
+        if(image != undefined){
+            // Upload the CV file to a cloud storage solution (Firebase Cloud Storage)
+            const storageRef = ref(storage, 'catalogue_images/' + image.name);
+            const snapshot = await uploadBytes(storageRef, image);
+
+            // Get the download URL for the uploaded file
+            const downloadURL = await getDownloadURL(snapshot.ref);
+
+            // Update the application data with the download URL
+            applicationData.thumbnailUrl = downloadURL;
+        } 
+
+        updateCatalogueInFirestore(collection, applicationData, docId);
+
+        const modal = document.getElementById("editModal");
+        modal.style.display = "none";
+    }catch(error) {
+        console.error("Error :", error);
+    }
 });
 
 // Function to update a catalogue item in Firestore
-function updateCatalogueInFirestore(collectionName, thumbnailUrl, title, docId) {
+function updateCatalogueInFirestore(collectionName, applicationData, docId) {
     const docRef = doc(firestoreDB, "food_types", docId);
     
-    updateDoc(docRef, {
-        thumbnailUrl: thumbnailUrl,
-        title: title,
-    })
+    updateDoc(docRef, applicationData)
         .then(() => {
             alert(`Catalogue item updated`);
             getAllFoodTypes();

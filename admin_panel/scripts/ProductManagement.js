@@ -1,5 +1,6 @@
 import { collection, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-import { firestoreDB } from './configurations.js';
+import { firestoreDB, storage } from './configurations.js';
+import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
 
 const food_types_div = document.getElementById("food-types-div");
 
@@ -37,6 +38,7 @@ function getAllInquiries(collection, listId, title, newCollection) {
                 const thumbnailUrl = inquiryData["ThumbnailUrl"];
                 const title = inquiryData["title"];
                 const price = inquiryData["price"];
+                const description = inquiryData["description"];
 
                 const inquiryItem = document.createElement("div");
                 inquiryItem.classList.add("inquiry-item");
@@ -53,7 +55,11 @@ function getAllInquiries(collection, listId, title, newCollection) {
                 const priceElement = document.createElement("p");
                 priceElement.innerHTML = `<strong>Price:</strong> Rs. ${price}.00`;
 
+                const descriptionElement = document.createElement("p");
+                descriptionElement.innerHTML = `<strong>Description:</strong> ${description}`;
+
                 itemTextDetailDiv.appendChild(nameElement);
+                itemTextDetailDiv.appendChild(descriptionElement);
                 itemTextDetailDiv.appendChild(priceElement);
 
                 const thumbnailElement = document.createElement("img");
@@ -79,7 +85,7 @@ function getAllInquiries(collection, listId, title, newCollection) {
                 editBtn.textContent = "Edit";
 
                 editBtn.addEventListener("click", function () {
-                    openEditModal(newCollection, title, thumbnailUrl, price, doc.id);
+                    openEditModal(newCollection, title, thumbnailUrl, price, description, doc.id);
                 });
 
                 const deleteButton = document.createElement("button");
@@ -124,16 +130,18 @@ function deleteInquiry(inquiryId, collection) {
 }   
 
 
-
-function openEditModal(collectionName, title, thumbnailUrl, price, docId) {
+//============= EDIT =====================================================================================
+function openEditModal(collectionName, title, thumbnailUrl, price, description, docId) {
     const modal = document.getElementById("editModal");
     modal.style.display = "block";
 
     // Set the existing data in the modal form
     document.getElementById("editCollection").innerHTML = collectionName;
     document.getElementById("edit-thumbnail-url").value = thumbnailUrl;
+    document.getElementById("product-image").src = thumbnailUrl;
     document.getElementById("edit-price").value = price;
     document.getElementById("edit-title").value = title;
+    document.getElementById("edit-description").value = description;
     document.getElementById("edit-collection").value = collectionName;
     document.getElementById("edit-doc-id").value = docId;
 }
@@ -145,32 +153,60 @@ document.getElementById("close-edit-modal").addEventListener("click", function()
 });
 
 // Form submission for editing
-document.getElementById("edit-catalogue-form").addEventListener("submit", function(e) {
+document.getElementById("edit-catalogue-form").addEventListener("submit", async function(e) {
     e.preventDefault();
 
     const thumbnailUrl = document.getElementById("edit-thumbnail-url").value;
     const title = document.getElementById("edit-title").value;
+    const description = document.getElementById("edit-description").value;
     const collection = document.getElementById("editCollection").value;
     const price = document.getElementById("edit-price").value;
     const docId = document.getElementById("edit-doc-id").value;
     const newCollection = document.getElementById("edit-collection").value;
+    const image = document.getElementById("image").files[0];
 
-    updateCatalogueInFirestore(newCollection, thumbnailUrl, title, price, docId);
+    const applicationData = {
+        ThumbnailUrl: null,
+        title: title,
+        price: price,
+        imageUrl: null,
+        description: description,
+    };
 
-    const modal = document.getElementById("editModal");
-    modal.style.display = "none";
+    try{
+        if(image != undefined){
+            // Upload the CV file to a cloud storage solution (Firebase Cloud Storage)
+            const storageRef = ref(storage, 'product_image/' + image.name);
+            const snapshot = await uploadBytes(storageRef, image);
+
+            // Get the download URL for the uploaded file
+            const downloadURL = await getDownloadURL(snapshot.ref);
+
+            // Update the application data with the download URL
+            applicationData.ThumbnailUrl = downloadURL;
+            applicationData.imageUrl = downloadURL;
+
+            document.getElementById("product-image").src = downloadURL;
+        }else{
+            // Update the application data with the download URL
+            applicationData.ThumbnailUrl = thumbnailUrl;
+            applicationData.imageUrl = thumbnailUrl;
+        }   
+
+        updateCatalogueInFirestore(newCollection, docId, applicationData);
+
+        const modal = document.getElementById("editModal");
+        modal.style.display = "none";
+    }catch(error) {
+        console.error("Error :", error);
+    }
 });
 
 // Function to update a catalogue item in Firestore
-function updateCatalogueInFirestore(collectionName, thumbnailUrl, title, price, docId) {
+function updateCatalogueInFirestore(collectionName, docId, applicationData) {
     const docRef = doc(firestoreDB, collectionName, docId);
-    
-    updateDoc(docRef, {
-        thumbnailUrl: thumbnailUrl,
-        title: title,
-        price: price,
-        imageUrl: thumbnailUrl,
-    })
+
+    updateDoc(docRef, applicationData)
         .then(() => {
             alert(`Product item updated in the ${collectionName} collection`);
             getAllFoodTypes();
