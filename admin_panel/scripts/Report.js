@@ -1,4 +1,4 @@
-import { ref, onChildAdded, query, equalTo, orderByChild } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+import { ref, onChildAdded, query, equalTo, orderByChild, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 import { db } from './configurations.js';
 
 // Function to fetch and display completed orders in the table
@@ -25,6 +25,7 @@ function fetchAndDisplayCompletedOrders() {
   thead.innerHTML = `
     <tr>
       <th>Order ID</th>
+      <th>User ID</th>
       <th>Title</th>
       <th>Quantity</th>
       <th>Price</th>
@@ -33,36 +34,19 @@ function fetchAndDisplayCompletedOrders() {
     </tr>
   `;
 
-  // Function to add a new row to the table
   function addOrderToTable(order) {
-    const newRow = document.createElement("tr");
-
-    const orderIdCell = document.createElement("td");
-    orderIdCell.textContent = order.key;
-
-    const titleCell = document.createElement("td");
-    titleCell.textContent = order.val().title;
-
-    const quantityCell = document.createElement("td");
-    quantityCell.textContent = order.val().quantity;
-
-    const priceCell = document.createElement("td");
-    priceCell.textContent = order.val().price;
-
-    const deliveryOptionCell = document.createElement("td");
-    deliveryOptionCell.textContent = order.val().selectedDeliveryOption;
-
-    const orderStatusCell = document.createElement("td");
-    orderStatusCell.textContent = order.val().orderStatus;
-
-    newRow.appendChild(orderIdCell);
-    newRow.appendChild(titleCell);
-    newRow.appendChild(quantityCell);
-    newRow.appendChild(priceCell);
-    newRow.appendChild(deliveryOptionCell);
-    newRow.appendChild(orderStatusCell);
-
-    tbody.appendChild(newRow);
+    var tableRow = `
+        <tr>
+          <td>${order.key}</td>
+          <td>${order.val().userid}</td>
+          <td>${order.val().title}</td>
+          <td>${order.val().quantity}</td>
+          <td>LKR ${order.val().price}</td>
+          <td>${order.val().selectedDeliveryOption}</td>
+          <td>${order.val().orderStatus}</td>
+        </tr>
+      `;
+      tbody.innerHTML += tableRow;
   }
 
   // Event listener for the 'child_added' event to dynamically update the table
@@ -100,6 +84,7 @@ function fetchAndDisplayOutForDeliveryOrders() {
   thead.innerHTML = `
     <tr>
       <th>Order ID</th>
+      <th>User ID</th>
       <th>Title</th>
       <th>Quantity</th>
       <th>Price</th>
@@ -110,34 +95,18 @@ function fetchAndDisplayOutForDeliveryOrders() {
 
   // Function to add a new row to the table
   function addOrderToTable(order) {
-    const newRow = document.createElement("tr");
-
-    const orderIdCell = document.createElement("td");
-    orderIdCell.textContent = order.key;
-
-    const titleCell = document.createElement("td");
-    titleCell.textContent = order.val().title;
-
-    const quantityCell = document.createElement("td");
-    quantityCell.textContent = order.val().quantity;
-
-    const priceCell = document.createElement("td");
-    priceCell.textContent = order.val().price;
-
-    const deliveryOptionCell = document.createElement("td");
-    deliveryOptionCell.textContent = order.val().selectedDeliveryOption;
-
-    const orderStatusCell = document.createElement("td");
-    orderStatusCell.textContent = order.val().orderStatus;
-
-    newRow.appendChild(orderIdCell);
-    newRow.appendChild(titleCell);
-    newRow.appendChild(quantityCell);
-    newRow.appendChild(priceCell);
-    newRow.appendChild(deliveryOptionCell);
-    newRow.appendChild(orderStatusCell);
-
-    tbody.appendChild(newRow);
+    var tableRow = `
+      <tr>
+        <td>${order.key}</td>
+        <td>${order.val().userid}</td>
+        <td>${order.val().title}</td>
+        <td>${order.val().quantity}</td>
+        <td>LKR ${order.val().price}</td>
+        <td>${order.val().selectedDeliveryOption}</td>
+        <td>${order.val().orderStatus}</td>
+      </tr>
+    `;
+    tbody.innerHTML += tableRow;
   }
 
   // Event listener for the 'child_added' event to dynamically update the table
@@ -151,9 +120,8 @@ function fetchAndDisplayOutForDeliveryOrders() {
   reportTableDiv.appendChild(table);
 }
 
-
 // Define a function to generate the PDF report
-function generatePDFReport() {
+function generatePDFReport(month) {
   document.getElementById('generatePdfButton').onclick = function() {
     // Get the current date and time
     const currentDateTime = new Date().toLocaleString();
@@ -174,7 +142,7 @@ function generatePDFReport() {
           </tr>
         </thead>
         <tbody>
-          ${getDataForReport('completed')}            
+          ${getDataForReport('completed', month)}            
         </tbody>
       </table>
 
@@ -190,7 +158,7 @@ function generatePDFReport() {
           </tr>
         </thead>
         <tbody>
-          ${getDataForReport('out_for_delivery')}            
+          ${getDataForReport('out_for_delivery', month)}            
         </tbody>
       </table>
     </div>`;
@@ -212,7 +180,7 @@ function generatePDFReport() {
 
 
 //generate pdf table data
-function getDataForReport(orderStatus) {
+function getDataForReport(orderStatus, month) {
   const ordersRef = ref(db, 'Orders');
   var tBodyContent = '';
 
@@ -223,7 +191,6 @@ function getDataForReport(orderStatus) {
   );
 
   function addOrderToTable(order) {
-
     var tableRow = `
       <tr>
         <td>${order.key}</td>
@@ -238,7 +205,9 @@ function getDataForReport(orderStatus) {
   }
 
   onChildAdded(completedOrdersQuery, (childSnapshot) => {
-    addOrderToTable(childSnapshot);
+    if(childSnapshot.val().timestamp.split('-')[1] == month){
+      addOrderToTable(childSnapshot);
+    }
   });
 
   return tBodyContent;
@@ -248,7 +217,15 @@ function getDataForReport(orderStatus) {
 
 
 document.getElementById('generatePdfButton').onclick = function () {
-    generatePDFReport();
+  document.getElementById('reportMonthSelector').addEventListener('change', function() {
+    if(this.value != null){
+      generatePDFReport(this.value);
+    }else{
+      const currentDateTime = new Date().toLocaleString();
+      console.log(currentDateTime);
+      generatePDFReport('8');
+    }
+  });
 };
 
 
