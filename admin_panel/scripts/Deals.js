@@ -79,19 +79,22 @@ function getAllDeals() {
         });
 }
 
-// Function to delete an inquiry document by ID
+// ======== DELETE DEAL =========================================================
 function deleteDeal(inquiryId) {
-    const dealRef = doc(firestoreDB, "deals", inquiryId);
-    deleteDoc(dealRef)
-    .then(() => {
-        console.log("Deal deleted successfully");
-    })
-    .catch((error) => {
-        console.error("Error deleting deal", error);
-    });
-}      
-  
-
+    const confirmation = confirm("Are you sure you want to delete this deal?");
+    if (confirmation) {
+        const dealRef = doc(firestoreDB, "deals", inquiryId);
+        deleteDoc(dealRef)
+            .then(() => {
+                console.log("Deal deleted successfully");
+            })
+            .catch((error) => {
+                console.error("Error deleting deal", error);
+            });
+    }else{
+        getAllDeals();
+    }
+}
 
 
 // ======== EDIT ==============================================================
