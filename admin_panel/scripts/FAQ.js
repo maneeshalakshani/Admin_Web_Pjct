@@ -70,66 +70,54 @@ function getAllFAQ() {
         });
 }
 
-// Event listener to show the "Add FAQ" form
-const addFAQButton = document.getElementById("addFAQButton");
-const addFAQForm = document.getElementById("addFAQForm");
-
-addFAQButton.addEventListener("click", () => {
-    addFAQForm.style.display = "block";
-    addFAQButton.style.display = "none";
+//========================= ADD PRODUCT =============================
+document.getElementById("addFAQButton").addEventListener("click", () => {
+    openModal();
 });
 
-// Event listener to submit a new FAQ
-const submitFAQButton = document.getElementById("submitFAQButton");
+// Open the modal
+function openModal() {
+    const modal = document.getElementById("addModal");
+    modal.style.display = "block";
+}
 
-submitFAQButton.addEventListener("click", () => {
-    const questionInput = document.getElementById("questionInput");
-    const answerInput = document.getElementById("answerInput");
-    const errorMessage = document.getElementById("errorMessage");
-
-    // Clear previous error message
-    errorMessage.textContent = "";
-
-    // Get the question and answer values from input fields
-    const question = questionInput.value;
-    const answer = answerInput.value;
-
-    // Check if question and answer fields are empty
-    if (!question || !answer) {
-        errorMessage.textContent = "Both question and answer are required!";
-    } else {
-        // Add the new FAQ to Firestore
-        addFAQToFirestore(question, answer);
-
-        // Clear input fields
-        questionInput.value = "";
-        answerInput.value = "";
-
-        // Hide the "Add FAQ" form
-        addFAQForm.style.display = "none";
-        addFAQButton.style.display = "block";
-    }
+// Close the modal
+document.getElementById("close-modal").addEventListener("click", function() {
+    const modal = document.getElementById("addModal");
+    modal.style.display = "none";
 });
 
-// Function to add a new FAQ to Firestore
-function addFAQToFirestore(question, answer) {
-    const faqCollection = collection(firestoreDB, "FAQ");
+// Form submission
+document.getElementById("faq-form").addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-    // Add the new FAQ to Firestore
-    addDoc(faqCollection, {
+    const question = document.getElementById("faq-question").value;
+    const answer = document.getElementById("faq-answer").value;
+
+    const applicationData = {
         question: question,
-        answer: answer
-    })
+        answer: answer,
+    };
+
+    addToFirestore(applicationData);
+
+    const modal = document.getElementById("addModal");
+    modal.style.display = "none";
+});
+
+// Function to add a new product to Firestore
+function addToFirestore(applicationData, collectionName) {
+    const docRef = collection(firestoreDB, 'FAQ');
+    addDoc(docRef, applicationData)
         .then(() => {
-            // Refresh the FAQ list
             getAllFAQ();
         })
         .catch((error) => {
-            console.error("Error adding FAQ:", error);
+            console.error("Error adding:", error);
         });
 }
 
-// Function to delete an inquiry document by ID
+// ============= DELETE =======================================================
 function deleteFAQ(docId) {
     const inquiryRef = doc(firestoreDB, "FAQ", docId);
     deleteDoc(inquiryRef)
