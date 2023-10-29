@@ -40,7 +40,7 @@ function addApplication(documentId) {
         const email = document.getElementById("email").value;
         const address = document.getElementById("address").value;
         const city = document.getElementById("city").value;
-        const pincode = document.getElementById("pincode").value;
+        // const pincode = document.getElementById("pincode").value;
         const date = document.getElementById("date").value;
         const cvFile = document.getElementById("cv").files[0];
         const careerName = document.getElementById("careerName").value;
@@ -55,7 +55,7 @@ function addApplication(documentId) {
             email: email,
             address: address,
             City: city,
-            pinCode: pincode,
+            // pinCode: pincode,
             Date: date,
             cv: null,
             career: careerDocumentRef,
@@ -84,7 +84,7 @@ function addApplication(documentId) {
                     document.getElementById("email").value = null;
                     document.getElementById("address").value = null;
                     document.getElementById("city").value = null;
-                    document.getElementById("pincode").value = null;
+                    // document.getElementById("pincode").value = null;
                     document.getElementById("date").value = null;
                     document.getElementById("cv").files = null;
                     document.getElementById("careerName").value = null;
