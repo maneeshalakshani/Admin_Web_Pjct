@@ -79,6 +79,15 @@ function addApplication(documentId) {
             // Add a new document to the "CareerApplication" collection
             addDoc(careerApplicationCollection, applicationData)
                 .then(() => {
+                    document.getElementById("first-name").value = null;
+                    document.getElementById("last-name").value = null;
+                    document.getElementById("email").value = null;
+                    document.getElementById("address").value = null;
+                    document.getElementById("city").value = null;
+                    document.getElementById("pincode").value = null;
+                    document.getElementById("date").value = null;
+                    document.getElementById("cv").files = null;
+                    document.getElementById("careerName").value = null;
                     alert("Application submitted successfully!");
                 })
                 .catch((error) => {
