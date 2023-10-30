@@ -121,7 +121,7 @@
 
         .modal-content {
             background-color: #fff;
-            margin: 15% auto;
+            margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
             border-radius: 5px;
@@ -184,6 +184,10 @@
             margin-top: 30px;
             margin-bottom: 10px;
         }
+
+        .disable-input{
+            background-color: #cbcbcb;
+        }
     </style>
     <!-- Firebase App SDKs -->
     <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
@@ -211,9 +215,14 @@
             <span class="close" id="close-edit-modal">&times;</span>
             <h2>Edit <span id="editCollection">...</span></h2>
             <form id="edit-catalogue-form" class="food-form">
-                <div class="form-control" style="display: none;">
-                    <div class="labelClass"><label for="edit-thumbnail-url">Thumbnail URL</label></div>
-                    <input type="text" id="edit-thumbnail-url" name="thumbnail-url" class="input-field">
+                <div class="form-control" id="previous-image">
+                    <div class="labelClass"><label for="edit-thumbnail-url">Initial Product Image</label></div>
+                    <input type="text" id="edit-thumbnail-url" name="thumbnail-url" class="input-field disable-input" readonly>
+                    <img src="" alt="product-image" id="product-image" style="height: 100px; width: 100px; display: none;" />
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="image">Update Product Image (PNG, JPG, JPEG)</label></div>
+                    <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg">
                 </div>
                 <!-- <div class="form-control">
                     <div class="labelClass"><label for="cv">Upload Your CV (Only pdf)</label></div>
@@ -226,6 +235,10 @@
                 <div class="form-control">
                     <div class="labelClass"><label for="edit-price">Price</label></div>
                     <input type="text" id="edit-price" name="price" class="input-field">
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-description">Description</label></div>
+                    <input type="text" id="edit-description" name="edit-description" class="input-field">
                 </div>
                 <input type="text" id="edit-collection" name="title" class="input-field" style="display: none;">
                 <input type="text" id="edit-doc-id" name="title" class="input-field" style="display: none;">

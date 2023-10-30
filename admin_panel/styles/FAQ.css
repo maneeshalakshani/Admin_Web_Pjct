@@ -10,6 +10,7 @@ body {
     padding: 0;
 }
 
+
 header {
     background-color: #F5631A;
     color: #fff;
@@ -22,38 +23,43 @@ header h1 {
     margin-bottom: 10px;
 }
 
+
 .container {
-    max-width: 100%;
-    margin: 0;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #f2f2f2;
-}
-
-.deals-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.deal-item {
-    max-width: 30%;
-    margin-bottom: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    transition: transform 0.2s;
+    margin-top: 20px;
 }
 
-.deal-item:hover {
-    transform: scale(1.05);
+
+.faq-list {
+    margin-top: 20px;
 }
 
-.deal-img {
-    width: 100%;
-    height: auto;
+.faq-item {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
 }
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+
+.faq-question {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.faq-answer {
+    font-size: 16px;
+    margin-left: 20px;
+}
+
 
 .btn {
     padding: 8px 16px;
@@ -62,15 +68,18 @@ header h1 {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
+    width: 100px;
 }
 
 .btn-primary {
     background-color: #F5631A;
     color: #fff;
+    margin-top: 20px;
+    margin-left: 30px;
 }
 
 .btn-primary:hover {
-    background-color: #d05416;
+    background-color: #F5631A;
 }
 
 .btn-danger {
@@ -78,26 +87,45 @@ header h1 {
     color: #fff;
 }
 
+.btn-success {
+    background-color: #157215;
+    color: #fff;
+}
+
 .btn-danger:hover {
     background-color: #bb2a38;
 }
 
-.deal-img{
-    height: 230px;
-    width: 100%;
-    margin-bottom: 20px;
+.input-style {
+    margin: 10px;
+    width: 95%;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); 
 }
 
-.deal-description{
-    margin-bottom: 20px;
-    width: 100%;
-    text-align: center;
-    font-size: 18px;
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin: 10px;
 }
 
-.deal-actions{
-    width: 100%;
-    margin-bottom: 20px;
+.faq-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.faq-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
 }
 
 /* CSS for the form container */
@@ -178,39 +206,3 @@ label {
     margin-top: 30px;
     margin-bottom: 10px;
 }
-
-.career-description{
-    width: 80%;
-    text-align: center;
-    line-height: 2;
-    margin: 0 auto 20px auto;
-}
-
-.career-item {
-    max-width: 30%;
-    margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    transition: transform 0.2s;
-    height: 400px;
-}
-
-.career-item:hover {
-    transform: scale(1.05);
-}
-
-.application-url{
-    text-decoration: none;
-    background-color: #E64A19;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-top: 30px;
-}
-
-.disable-input{
-    background-color: #cbcbcb;
-}
-

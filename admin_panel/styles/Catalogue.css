@@ -1,0 +1,169 @@
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.food-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.food-details {
+    display: flex;
+    align-items: center;
+}
+
+.food-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.food-description {
+    color: #777;
+    width: 95%;
+}
+
+.food-count {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.add-button {
+    background-color: #FF5722;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background-color: #E64A19;
+}
+
+/* CSS for the form container */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    width: 80%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style for the form elements */
+.food-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.input-field {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 98%;
+}
+
+.submit-button {
+    background-color: #FF5722;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #E64A19;
+}
+
+.labelClass{
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+header {
+    background-color: #F5631A;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.description-div{
+    margin-top: 10px;
+    font-size: 16px;
+    color: #a3a0a0;
+}
+
+.disable-input{
+    background-color: #cbcbcb;
+}
+

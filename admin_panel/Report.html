@@ -18,15 +18,39 @@
 <body>
     <header>
         <h1>Reports</h1>
-       
     </header>
 
     <div class="container">
         <h2>Delivered Order Report</h2>
         <div class="faq-list" id="faqList"></div>
         <div class="faq-actions">
-            <button class="btn btn-primary" id="generatePdfButton">Download Report</button>
-            <div id="report-table">No Data</div>
+            <button class="btn btn-primary" id="generatePdfButton">Orders Report</button>
+
+            <select id="reportMonthSelector">
+                <option value="0">Select Month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+
+            <div class="">
+                <h3>Completed Orders</h3>
+                <div id="report-table">No Data</div>
+            </div>
+
+            <div class="report-div">
+                <h3>Out For Delivery Orders</h3>
+                <div id="ofd-report-table">No Data</div>
+            </div>
         </div>
     </div>
 

@@ -62,7 +62,7 @@ function getAllOrders() {
                 <th>Order</th>
                 <th>Username</th>
                 <th>Address</th>
-                <th>Price</th>
+                <th>Delivery Option</th>
                 <th>Order Status</th>
                 <th>Action</th>
             </tr>`;
@@ -102,7 +102,7 @@ function getAllOrders() {
                                 orderStatusCell.appendChild(statusText);
 
                                 // quantityCell.innerHTML = order.quantity;
-                                priceCell.innerHTML = "LRK " + order.price + ".00";
+                                priceCell.innerHTML = order.selectedDeliveryOption;
 
                                 const StatusChangeDiv = document.createElement("div");
 

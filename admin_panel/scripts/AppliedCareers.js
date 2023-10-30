@@ -45,7 +45,7 @@ function getAllDeals() {
                 row.appendChild(dealItem);
                 count++;
 
-                if (count === 3) { // Display 3 items per row
+                if (count === 5) { // Display 3 items per row
                     dealsList.appendChild(row);
                     row = document.createElement("tr");
                     count = 0;

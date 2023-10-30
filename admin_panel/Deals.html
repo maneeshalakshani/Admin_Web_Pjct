@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inquiry</title>
+    <title>Deals</title>
     <link rel="stylesheet" href="styles/Deals.css">
     
     <!-- Firebase App SDKs -->
@@ -34,9 +34,13 @@
             <span class="close" id="close-edit-modal">&times;</span>
             <h2>Edit Deal</h2>
             <form id="edit-faq-form" class="food-form">
-                <div class="form-control" style="display: none;">
-                    <div class="labelClass"><label for="edit-question">Question</label></div>
-                    <input type="text" id="edit-imageUrl" name="edit-question" class="input-field">
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-question">Deal Image</label></div>
+                    <input type="text" id="edit-imageUrl" name="edit-question" class="input-field disable-input" readonly>
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-image">Update Deal Image (PNG, JPG, JPEG)</label></div>
+                    <input type="file" id="edit-image" name="edit-image" accept=".png, .jpg, .jpeg">
                 </div>
                 <div class="form-control">
                     <div class="labelClass"><label for="edit-answer">Description</label></div>
@@ -54,13 +58,17 @@
             <span class="close" id="close-add-modal">&times;</span>
             <h2>Add Deal</h2>
             <form id="add-deals-form" class="food-form">
-                <div class="form-control">
+                <!-- <div class="form-control">
                     <div class="labelClass"><label for="add-imageUrl">ImageUrl</label></div>
                     <input type="text" id="add-imageUrl" name="add-question" class="input-field">
+                </div> -->
+                <div class="form-control">
+                    <div class="labelClass"><label for="image">Upload Deal Image (PNG, JPG, JPEG)</label></div>
+                    <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" required>
                 </div>
                 <div class="form-control">
                     <div class="labelClass"><label for="add-description">Description</label></div>
-                    <input type="text" id="add-description" name="answer" class="input-field">
+                    <input type="text" id="add-description" name="answer" class="input-field" required>
                 </div>
                 <button type="submit" class="submit-button">Add Deal</button>
             </form>

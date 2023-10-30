@@ -4,218 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ </title>
-    <style>
-       
-        body, h1, h2, p {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-
-       
-        header {
-            background-color: #F5631A;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            margin-top: 20px;
-        }
-
-        
-        .faq-list {
-            margin-top: 20px;
-        }
-
-        .faq-item {
-            padding: 20px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-
-       
-        .faq-question {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .faq-answer {
-            font-size: 16px;
-            margin-left: 20px;
-        }
-
-     
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            width: 100px;
-        }
-
-        .btn-primary {
-            background-color: #F5631A;
-            color: #fff;
-            margin-top: 60px;
-            margin-left: 30px;
-        }
-
-        .btn-primary:hover {
-            background-color: #F5631A;
-        }
-
-        .btn-danger {
-            background-color: #DC3545;
-            color: #fff;
-        }
-
-        .btn-success {
-            background-color: #157215;
-            color: #fff;
-        }
-
-        .btn-danger:hover {
-            background-color: #bb2a38;
-        }
-
-        .input-style {
-            margin: 10px;
-            width: 95%;
-            padding: 10px 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); 
-        }
-
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin: 10px;
-        }
-
-        .faq-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .faq-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-
-        /* CSS for the form container */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            border-radius: 5px;
-            width: 80%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Style for the close button */
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #333;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* Style for the form elements */
-        .food-form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-control {
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        .input-field {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 98%;
-        }
-
-        .submit-button {
-            background-color: #FF5722;
-            color: #fff;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .submit-button:hover {
-            background-color: #E64A19;
-        }
-
-        .labelClass{
-            margin-top: 30px;
-            margin-bottom: 10px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="styles/FAQ.css">
 
     <!-- Firebase App SDKs -->
     <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
@@ -229,21 +18,31 @@
 <body>
     <header>
         <h1>FAQ Management</h1>
-       
     </header>
+
+    <button class="btn btn-primary" id="addFAQButton">Add FAQ</button>
 
     <div class="container">
         <h2>Frequently Asked Questions (FAQ)</h2>
         <div class="faq-list" id="faqList"></div>
-        <div class="faq-actions">
-            <button class="btn btn-primary" id="addFAQButton">Add FAQ</button>
-            <div id="addFAQForm" style="display: none; margin-top: 30px;">
-                <h2 style="margin-left: 10px;">Add your FAQ</h2>
-                <input type="text" id="questionInput" placeholder="Enter Question" class="input-style">
-                <input type="text" id="answerInput" placeholder="Enter Answer" class="input-style">
-                <button class="btn btn-primary" id="submitFAQButton" style="margin-top: 20px; margin-left: 10px;">Submit</button>
-                <div id="errorMessage" class="error-message"></div>
-            </div>
+    </div>
+
+    <!-- Add FAQ Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-modal">&times;</span>
+            <h2>Add FAQ</span></h2>
+            <form id="faq-form" class="food-form">
+                <div class="form-control">
+                    <div class="labelClass"><label for="faq-question">Question</label></div>
+                    <input type="text" id="faq-question" name="faq-question" class="input-field">
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="faq-answer">Answer</label></div>
+                    <input type="text" id="faq-answer" name="faq-answer" class="input-field">
+                </div>
+                <button type="submit" class="submit-button">Add FAQ</button>
+            </form>
         </div>
     </div>
 

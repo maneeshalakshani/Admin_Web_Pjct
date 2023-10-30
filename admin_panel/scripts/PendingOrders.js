@@ -20,7 +20,9 @@ function getAllPendingOrders() {
                 <th>Username</th>
                 <th>Address</th>
                 <th>Price</th>
+                <th>Delivery Option</th>
                 <th>Order Status</th>
+                <th>Order Date</th>
                 <th>Action</th>
             </tr>`;
 
@@ -47,8 +49,10 @@ function getAllPendingOrders() {
                                     const userNameCell = row.insertCell(1);
                                     const addressCell = row.insertCell(2);
                                     const priceCell = row.insertCell(3);
-                                    const orderStatusCell = row.insertCell(4);
-                                    const actionCell = row.insertCell(5);
+                                    const deliveryOptionCell = row.insertCell(4);
+                                    const orderStatusCell = row.insertCell(5);
+                                    const orderDateCell = row.insertCell(6);
+                                    const actionCell = row.insertCell(7);
 
                                     titleCell.innerHTML = order.quantity + " * " + order.title;
                                     userNameCell.innerHTML = userName;
@@ -59,7 +63,8 @@ function getAllPendingOrders() {
                                     statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : order.orderStatus == 'out_for_delivery' ? '#339FFF' : 'purple';
                                     orderStatusCell.appendChild(statusText);
 
-                                    // quantityCell.innerHTML = order.quantity;
+                                    deliveryOptionCell.innerHTML = order.selectedDeliveryOption;
+                                    orderDateCell.innerHTML = order.timestamp.split(" ")[0];
                                     priceCell.innerHTML = "LRK " + order.price + ".00";
 
                                     const StatusChangeDiv = document.createElement("div");
@@ -84,7 +89,7 @@ function getAllPendingOrders() {
 
                                     // Button to update order status
                                     const updateStatusButton = document.createElement("button");
-                                    updateStatusButton.textContent = "Update Status";
+                                    updateStatusButton.textContent = "Update";
                                     updateStatusButton.classList.add("action-button"); // Add classes for styling
                                     updateStatusButton.addEventListener("click", () => {
                                         const newStatus = orderStatusDropdown.value;
@@ -131,8 +136,10 @@ function getAllPendingOrders() {
                                     const userNameCell = row.insertCell(1);
                                     const addressCell = row.insertCell(2);
                                     const priceCell = row.insertCell(3);
-                                    const orderStatusCell = row.insertCell(4);
-                                    const actionCell = row.insertCell(5);
+                                    const deliveryOptionCell = row.insertCell(4);
+                                    const orderStatusCell = row.insertCell(5);
+                                    const orderDateCell = row.insertCell(6);
+                                    const actionCell = row.insertCell(7);
 
                                     titleCell.innerHTML = order.quantity + " * " + order.title;
                                     userNameCell.innerHTML = userName;
@@ -143,7 +150,8 @@ function getAllPendingOrders() {
                                     statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : order.orderStatus == 'out_for_delivery' ? '#339FFF' : 'purple';
                                     orderStatusCell.appendChild(statusText);
 
-                                    // quantityCell.innerHTML = order.quantity;
+                                    deliveryOptionCell.innerHTML = order.selectedDeliveryOption;
+                                    orderDateCell.innerHTML = order.timestamp.split(" ")[0];
                                     priceCell.innerHTML = "LRK " + order.price + ".00";
 
                                     const StatusChangeDiv = document.createElement("div");
@@ -168,7 +176,7 @@ function getAllPendingOrders() {
 
                                     // Button to update order status
                                     const updateStatusButton = document.createElement("button");
-                                    updateStatusButton.textContent = "Update Status";
+                                    updateStatusButton.textContent = "Update";
                                     updateStatusButton.classList.add("action-button"); // Add classes for styling
                                     updateStatusButton.addEventListener("click", () => {
                                         const newStatus = orderStatusDropdown.value;
@@ -215,8 +223,10 @@ function getAllPendingOrders() {
                                     const userNameCell = row.insertCell(1);
                                     const addressCell = row.insertCell(2);
                                     const priceCell = row.insertCell(3);
-                                    const orderStatusCell = row.insertCell(4);
-                                    const actionCell = row.insertCell(5);
+                                    const deliveryOptionCell = row.insertCell(4);
+                                    const orderStatusCell = row.insertCell(5);
+                                    const orderDateCell = row.insertCell(6);
+                                    const actionCell = row.insertCell(7);
 
                                     titleCell.innerHTML = order.quantity + " * " + order.title;
                                     userNameCell.innerHTML = userName;
@@ -227,7 +237,8 @@ function getAllPendingOrders() {
                                     statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : order.orderStatus == 'out_for_delivery' ? '#339FFF' : 'purple';
                                     orderStatusCell.appendChild(statusText);
 
-                                    // quantityCell.innerHTML = order.quantity;
+                                    deliveryOptionCell.innerHTML = order.selectedDeliveryOption;
+                                    orderDateCell.innerHTML = order.timestamp.split(" ")[0];
                                     priceCell.innerHTML = "LRK " + order.price + ".00";
 
                                     const StatusChangeDiv = document.createElement("div");
@@ -252,7 +263,7 @@ function getAllPendingOrders() {
 
                                     // Button to update order status
                                     const updateStatusButton = document.createElement("button");
-                                    updateStatusButton.textContent = "Update Status";
+                                    updateStatusButton.textContent = "Update";
                                     updateStatusButton.classList.add("action-button"); // Add classes for styling
                                     updateStatusButton.addEventListener("click", () => {
                                         const newStatus = orderStatusDropdown.value;
@@ -299,8 +310,10 @@ function getAllPendingOrders() {
                                     const userNameCell = row.insertCell(1);
                                     const addressCell = row.insertCell(2);
                                     const priceCell = row.insertCell(3);
-                                    const orderStatusCell = row.insertCell(4);
-                                    const actionCell = row.insertCell(5);
+                                    const deliveryOptionCell = row.insertCell(4);
+                                    const orderStatusCell = row.insertCell(5);
+                                    const orderDateCell = row.insertCell(6);
+                                    const actionCell = row.insertCell(7);
 
                                     titleCell.innerHTML = order.quantity + " * " + order.title;
                                     userNameCell.innerHTML = userName;
@@ -311,7 +324,8 @@ function getAllPendingOrders() {
                                     statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : order.orderStatus == 'out_for_delivery' ? '#339FFF' : 'purple';
                                     orderStatusCell.appendChild(statusText);
 
-                                    // quantityCell.innerHTML = order.quantity;
+                                    deliveryOptionCell.innerHTML = order.selectedDeliveryOption;
+                                    orderDateCell.innerHTML = order.timestamp.split(" ")[0];
                                     priceCell.innerHTML = "LRK " + order.price + ".00";
 
                                     const StatusChangeDiv = document.createElement("div");
@@ -336,7 +350,7 @@ function getAllPendingOrders() {
 
                                     // Button to update order status
                                     const updateStatusButton = document.createElement("button");
-                                    updateStatusButton.textContent = "Update Status";
+                                    updateStatusButton.textContent = "Update";
                                     updateStatusButton.classList.add("action-button"); // Add classes for styling
                                     updateStatusButton.addEventListener("click", () => {
                                         const newStatus = orderStatusDropdown.value;

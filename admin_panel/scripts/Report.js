@@ -1,4 +1,4 @@
-import { ref, onChildAdded, query, equalTo, orderByChild } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+import { ref, onChildAdded, query, equalTo, orderByChild, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 import { db } from './configurations.js';
 
 // Function to fetch and display completed orders in the table
@@ -25,6 +25,7 @@ function fetchAndDisplayCompletedOrders() {
   thead.innerHTML = `
     <tr>
       <th>Order ID</th>
+      <th>User ID</th>
       <th>Title</th>
       <th>Quantity</th>
       <th>Price</th>
@@ -33,36 +34,19 @@ function fetchAndDisplayCompletedOrders() {
     </tr>
   `;
 
-  // Function to add a new row to the table
   function addOrderToTable(order) {
-    const newRow = document.createElement("tr");
-
-    const orderIdCell = document.createElement("td");
-    orderIdCell.textContent = order.key;
-
-    const titleCell = document.createElement("td");
-    titleCell.textContent = order.val().title;
-
-    const quantityCell = document.createElement("td");
-    quantityCell.textContent = order.val().quantity;
-
-    const priceCell = document.createElement("td");
-    priceCell.textContent = order.val().price;
-
-    const deliveryOptionCell = document.createElement("td");
-    deliveryOptionCell.textContent = order.val().deliveryOption;
-
-    const orderStatusCell = document.createElement("td");
-    orderStatusCell.textContent = order.val().orderStatus;
-
-    newRow.appendChild(orderIdCell);
-    newRow.appendChild(titleCell);
-    newRow.appendChild(quantityCell);
-    newRow.appendChild(priceCell);
-    newRow.appendChild(deliveryOptionCell);
-    newRow.appendChild(orderStatusCell);
-
-    tbody.appendChild(newRow);
+    var tableRow = `
+        <tr>
+          <td>${order.key}</td>
+          <td>${order.val().userid}</td>
+          <td>${order.val().title}</td>
+          <td>${order.val().quantity}</td>
+          <td>LKR ${order.val().price}</td>
+          <td>${order.val().selectedDeliveryOption}</td>
+          <td>${order.val().orderStatus}</td>
+        </tr>
+      `;
+      tbody.innerHTML += tableRow;
   }
 
   // Event listener for the 'child_added' event to dynamically update the table
@@ -76,17 +60,77 @@ function fetchAndDisplayCompletedOrders() {
   reportTableDiv.appendChild(table);
 }
 
+// Function to fetch and display completed orders in the table
+function fetchAndDisplayOutForDeliveryOrders() {
+  // Reference to the 'Orders' node in the Realtime Database
+  const ordersRef = ref(db, 'Orders');
+
+  // Reference to the HTML table
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
+
+  table.appendChild(thead);
+  table.appendChild(tbody);
+
+  // Create a query to filter orders with "orderStatus" equal to "Completed"
+  const completedOrdersQuery = query(
+    ordersRef,
+    orderByChild("orderStatus"),
+    equalTo("out_for_delivery")
+  );
+
+  // Define table headers
+  thead.innerHTML = `
+    <tr>
+      <th>Order ID</th>
+      <th>User ID</th>
+      <th>Title</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Delivery Option</th>
+      <th>Order Status</th>
+    </tr>
+  `;
+
+  // Function to add a new row to the table
+  function addOrderToTable(order) {
+    var tableRow = `
+      <tr>
+        <td>${order.key}</td>
+        <td>${order.val().userid}</td>
+        <td>${order.val().title}</td>
+        <td>${order.val().quantity}</td>
+        <td>LKR ${order.val().price}</td>
+        <td>${order.val().selectedDeliveryOption}</td>
+        <td>${order.val().orderStatus}</td>
+      </tr>
+    `;
+    tbody.innerHTML += tableRow;
+  }
+
+  // Event listener for the 'child_added' event to dynamically update the table
+  onChildAdded(completedOrdersQuery, (childSnapshot) => {
+    addOrderToTable(childSnapshot);
+  });
+
+  // Append the table to the report-table div
+  const reportTableDiv = document.getElementById("ofd-report-table");
+  reportTableDiv.innerHTML = "";
+  reportTableDiv.appendChild(table);
+}
 
 // Define a function to generate the PDF report
-function generatePDFReport() {
+function generatePDFReport(month) {
   document.getElementById('generatePdfButton').onclick = function() {
     // Get the current date and time
     const currentDateTime = new Date().toLocaleString();
 
     var element = `<div class="reportHead">
-        <h1 class="reportHeader">Completed Orders</h1>
+        <h1 class="reportHeader">Order Summary</h1>
         <p class="reportDateTime">${currentDateTime}</p>
       </div>
+      <h3 style="margin: 50px auto; width: 80%">Completed Orders</h3>
       <table style="margin: 50px auto; width: 80%">
         <thead>
           <tr>
@@ -98,14 +142,30 @@ function generatePDFReport() {
           </tr>
         </thead>
         <tbody>
-          ${getDataForReport()}            
+          ${getDataForReport('completed', month)}            
+        </tbody>
+      </table>
+
+      <h3 style="margin: 0 auto; width: 80%">Out for Delivery Orders</h3>
+      <table style="margin: 50px auto; width: 80%">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Delivery Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${getDataForReport('out_for_delivery', month)}            
         </tbody>
       </table>
     </div>`;
 
     var opt = {
       margin: 0, // Set margin to 0
-      filename: 'Completed Orders Report.pdf',
+      filename: 'Orders Report.pdf',
       image: {type: 'jpeg', quality: 0.98},
       html2canvas: {scale: 2},
       jsPDF: {unit: 'in', format: 'letter', 'orientation': 'portrait'}
@@ -120,25 +180,24 @@ function generatePDFReport() {
 
 
 //generate pdf table data
-function getDataForReport() {
+function getDataForReport(orderStatus, month) {
   const ordersRef = ref(db, 'Orders');
   var tBodyContent = '';
 
   const completedOrdersQuery = query(
     ordersRef,
     orderByChild("orderStatus"),
-    equalTo("completed")
+    equalTo(orderStatus)
   );
 
   function addOrderToTable(order) {
-
     var tableRow = `
       <tr>
         <td>${order.key}</td>
         <td>${order.val().title}</td>
         <td>${order.val().quantity}</td>
         <td>LKR ${order.val().price}</td>
-        <td>${order.val().deliveryOption}</td>
+        <td>${order.val().selectedDeliveryOption}</td>
       </tr>
     `;
 
@@ -146,7 +205,9 @@ function getDataForReport() {
   }
 
   onChildAdded(completedOrdersQuery, (childSnapshot) => {
-    addOrderToTable(childSnapshot);
+    if(childSnapshot.val().timestamp.split('-')[1] == month){
+      addOrderToTable(childSnapshot);
+    }
   });
 
   return tBodyContent;
@@ -156,12 +217,21 @@ function getDataForReport() {
 
 
 document.getElementById('generatePdfButton').onclick = function () {
-    generatePDFReport();
+  document.getElementById('reportMonthSelector').addEventListener('change', function() {
+    if(this.value != null){
+      generatePDFReport(this.value);
+    }else{
+      const currentDateTime = new Date().toLocaleString();
+      console.log(currentDateTime);
+      generatePDFReport('8');
+    }
+  });
 };
 
 
 
 window.onload = function () {
   fetchAndDisplayCompletedOrders();
+  fetchAndDisplayOutForDeliveryOrders();
 };
 
