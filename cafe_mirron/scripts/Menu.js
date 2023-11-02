@@ -34,6 +34,7 @@ function getTypes(collectionName, htmlList) {
 
                 const buttonElement = document.createElement("a");
                 buttonElement.href = "burger.html";
+                buttonElement.href = `burger.html?collectionName=${collection}`;
                 buttonElement.classList.add("menu_btn");
                 buttonElement.text = "View List";
 
