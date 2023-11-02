@@ -59,10 +59,10 @@ function getAppliedCareers(careerTitle) {
                     const dealItem = document.createElement("td");
                     dealItem.classList.add("career-item");
 
-                    const thumbnailElement = document.createElement("img");
-                    thumbnailElement.classList.add("career-img");
-                    thumbnailElement.src = pdfImage;
-                    thumbnailElement.alt = "imageUrl";
+                    // const thumbnailElement = document.createElement("img");
+                    // thumbnailElement.classList.add("career-img");
+                    // thumbnailElement.src = pdfImage;
+                    // thumbnailElement.alt = "imageUrl";
 
                     const descriptionElement = document.createElement("div");
                     descriptionElement.classList.add("career-description");
@@ -82,7 +82,7 @@ function getAppliedCareers(careerTitle) {
                     urlElement.textContent = "Show cv";
 
 
-                    dealItem.appendChild(thumbnailElement);
+                    // dealItem.appendChild(thumbnailElement);
                     dealItem.appendChild(descriptionElement);
                     dealItem.appendChild(urlElement);
 
