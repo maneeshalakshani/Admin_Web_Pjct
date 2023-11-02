@@ -1,3 +1,70 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+
+}
+
+/* Navigation Bar */
+.nav{
+           
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    right: 0;
+    left: 0;
+    background: linear-gradient(
+        to left,
+        black,
+        chocolate,
+        orange,
+        white
+     ) ;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+ }
+
+ .nav .logo img{
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  margin: 7px 0;
+ }
+
+ .nav a:hover{
+    color: chocolate;
+    transition: .4s;
+ }
+ .nav ul{
+    display: flex;
+    list-style: none;
+ }
+ .nav ul li{
+  display: inline-block;
+  margin: 0 15px;
+ }
+ .nav ul li a{
+  text-decoration: none;
+  color: aliceblue;
+  font-weight: 500;
+  font-size: 17px;  
+ }
+
+ .nav ul li a::after{
+    content: '';
+    width: 0;
+    height: 2px;
+    background-color: chocolate;
+    display: block;
+    transition: 0.2s linear;
+ }
+
+ .nav ul li a:hover::after{
+    width: 100%;
+ }
+
+
 *,::after,::before{
     margin: 0;
     padding: 0;
