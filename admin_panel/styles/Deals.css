@@ -179,37 +179,6 @@ label {
     margin-bottom: 10px;
 }
 
-.career-description{
-    width: 80%;
-    text-align: center;
-    line-height: 2;
-    margin: 0 auto 20px auto;
-}
-
-.career-item {
-    max-width: 30%;
-    margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    transition: transform 0.2s;
-    height: 400px;
-}
-
-.career-item:hover {
-    transform: scale(1.05);
-}
-
-.application-url{
-    text-decoration: none;
-    background-color: #E64A19;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-top: 30px;
-}
-
 .disable-input{
     background-color: #cbcbcb;
 }

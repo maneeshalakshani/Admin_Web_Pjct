@@ -2,15 +2,28 @@ import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/f
 import { firestoreDB } from './config.js';
 
 function getProducts(){
-    getTypeProduct("burger_types", "burger-list");
-    getTypeProduct("coffee_types", "coffee-list");
-    getTypeProduct("Pastry-Types", "pastry-list");
-    getTypeProduct("Milkshake_Types", "milkshake-list");
-    getTypeProduct("Lassi_Types", "lassie-list");
-    getTypeProduct("Icecream_Types", "icecreame-list");
-    getTypeProduct("Fruit_Salad_Types", "fruitSalad-list");
-    getTypeProduct("Fruit_Juice_Types", "fruitJuice-list");
-    getTypeProduct("Crispy_Chicken_types", "chicken-list");
+
+    // Get the collectionName parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const collectionName = urlParams.get("collectionName");
+
+    const itemTitle = document.getElementById("item-title");
+    itemTitle.innerHTML = null;
+
+    const name = collectionName.split("_");
+
+    console.log(name)
+
+    if(name.length > 2){
+        for(let i =0; i<name.length-1; i++){
+            itemTitle.textContent += `${name[i]} `;
+            console.log(itemTitle)
+        }
+    }else{
+        itemTitle.textContent += collectionName.split("_")[0];
+    }
+
+    getTypeProduct(collectionName, "item-list");
 }
 
 function getTypeProduct(collectionName, htmlList) {

@@ -1,0 +1,42 @@
+
+.career-title{
+    margin: 40px 0 20px 0;
+}
+
+.career-img{
+    height: 240px;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+.career-item {
+    max-width: 20%;
+    width: 300px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.2s;
+    height: 130px;
+}
+
+.career-item:hover {
+    transform: scale(1.05);
+}
+
+.application-url{
+    text-decoration: none;
+    background-color: #E64A19;
+    color: #fff;
+    padding: 5px 20px;
+    border-radius: 5px;
+    height: 80px;
+}
+
+.career-description{
+    width: 80%;
+    text-align: center;
+    line-height: 1.2;
+    margin: 0 auto 20px auto;
+}
