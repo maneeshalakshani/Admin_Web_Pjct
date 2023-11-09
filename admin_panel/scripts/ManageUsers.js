@@ -113,12 +113,12 @@ function getAllUsers() {
                 const inquiryActions = document.createElement("div");
                 inquiryActions.classList.add("career-actions");
 
-                const replyButton = document.createElement("button");
-                replyButton.classList.add("btn", "btn-primary");
-                replyButton.textContent = "Edit";
-                replyButton.addEventListener("click", () => {
-                    openEditModal(username, email, phone, address,pw, doc.id);
-                });
+                // const replyButton = document.createElement("button");
+                // replyButton.classList.add("btn", "btn-primary");
+                // replyButton.textContent = "Edit";
+                // replyButton.addEventListener("click", () => {
+                //     openEditModal(username, email, phone, address,pw, doc.id);
+                // });
                 
 
                 const deleteButton = document.createElement("button");
@@ -134,7 +134,7 @@ function getAllUsers() {
                 });
   
 
-                inquiryActions.appendChild(replyButton);
+                // inquiryActions.appendChild(replyButton);
                 inquiryActions.appendChild(deleteButton);
 
                 inquiryItem.appendChild(userDetails);
@@ -148,7 +148,7 @@ function getAllUsers() {
         });
 }
 
-// Function to delete an inquiry document by ID
+// Function to delete a user by ID =========================================
 function deleteUser(userId) {
     const inquiryRef = doc(firestoreDB, "users", userId);
     deleteDoc(inquiryRef)
@@ -162,60 +162,60 @@ function deleteUser(userId) {
 
 
 // ======== EDIT ==============================================================
-function openEditModal(userName, email, phone, address, password, docId) {
-    const modal = document.getElementById("editModal");
-    modal.style.display = "block";
+// function openEditModal(userName, email, phone, address, password, docId) {
+//     const modal = document.getElementById("editModal");
+//     modal.style.display = "block";
 
-    // Prefill the form with user data
-    document.getElementById("editUsername").value = userName;
-    document.getElementById("editEmail").value = email;
-    document.getElementById("editPhone").value = phone;
-    document.getElementById("editAddress").value = address;
-    document.getElementById("editPassword").value = password;
-    document.getElementById("edit-doc-id").value = docId;
-}
+//     // Prefill the form with user data
+//     document.getElementById("editUsername").value = userName;
+//     document.getElementById("editEmail").value = email;
+//     document.getElementById("editPhone").value = phone;
+//     document.getElementById("editAddress").value = address;
+//     document.getElementById("editPassword").value = password;
+//     document.getElementById("edit-doc-id").value = docId;
+// }
 
-// Close the Update modal
-document.getElementById("close-edit-modal").addEventListener("click", function() {
-    const modal = document.getElementById("editModal");
-    modal.style.display = "none";
-});
+// // Close the Update modal
+// document.getElementById("close-edit-modal").addEventListener("click", function() {
+//     const modal = document.getElementById("editModal");
+//     modal.style.display = "none";
+// });
 
-// Form submission for editing
-document.getElementById("edit-user-form").addEventListener("submit", function(e) {
-    e.preventDefault();
+// // Form submission for editing
+// document.getElementById("edit-user-form").addEventListener("submit", function(e) {
+//     e.preventDefault();
 
-    const updatedUsername = document.getElementById("editUsername").value;
-    const updatedEmail = document.getElementById("editEmail").value;
-    const updatedPhone = document.getElementById("editPhone").value;
-    const updatedAddress = document.getElementById("editAddress").value;
-    const updatedPassword = document.getElementById("editPassword").value;
-    const docID = document.getElementById("edit-doc-id").value;
+//     const updatedUsername = document.getElementById("editUsername").value;
+//     const updatedEmail = document.getElementById("editEmail").value;
+//     const updatedPhone = document.getElementById("editPhone").value;
+//     const updatedAddress = document.getElementById("editAddress").value;
+//     const updatedPassword = document.getElementById("editPassword").value;
+//     const docID = document.getElementById("edit-doc-id").value;
 
-    updateDataInFirestore(updatedUsername, updatedEmail, updatedPhone, updatedAddress, updatedPassword, docID);
+//     updateDataInFirestore(updatedUsername, updatedEmail, updatedPhone, updatedAddress, updatedPassword, docID);
 
-    const modal = document.getElementById("editModal");
-    modal.style.display = "none";
-});
+//     const modal = document.getElementById("editModal");
+//     modal.style.display = "none";
+// });
 
-// Function to update a user item in Firestore
-function updateDataInFirestore(updatedUsername, updatedEmail, updatedPhone, updatedAddress, updatedPassword, docId) {
-    const docRef = doc(firestoreDB, "users", docId);
+// // Function to update a user item in Firestore
+// function updateDataInFirestore(updatedUsername, updatedEmail, updatedPhone, updatedAddress, updatedPassword, docId) {
+//     const docRef = doc(firestoreDB, "users", docId);
     
-    updateDoc(docRef, {
-        userName: updatedUsername,
-        email: updatedEmail,
-        phoneNumber: updatedPhone,
-        residentialAddress: updatedAddress,
-        password: updatedPassword,
-    })
-        .then(() => {
-            getAllUsers();
-        })
-        .catch((error) => {
-            console.error("Error updating User:", error);
-        });
-}
+//     updateDoc(docRef, {
+//         userName: updatedUsername,
+//         email: updatedEmail,
+//         phoneNumber: updatedPhone,
+//         residentialAddress: updatedAddress,
+//         password: updatedPassword,
+//     })
+//         .then(() => {
+//             getAllUsers();
+//         })
+//         .catch((error) => {
+//             console.error("Error updating User:", error);
+//         });
+// }
 
 
 
