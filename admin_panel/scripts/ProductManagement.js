@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { collection, getDocs, doc, deleteDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB, storage } from './configurations.js';
 import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
 
@@ -6,7 +6,7 @@ const food_types_div = document.getElementById("food-types-div");
 
 function getAllFoodTypes() {
     const Fcollection = collection(firestoreDB, "food_types");
-    getDocs(Fcollection)
+    getDocs(query(Fcollection, orderBy("title")))
         .then((querySnapshot) => {
             
             querySnapshot.forEach((doc) => {
@@ -25,7 +25,7 @@ function getAllFoodTypes() {
 }
 
 function getAllInquiries(collection, listId, title, newCollection) {
-    getDocs(collection)
+    getDocs(query(collection, orderBy("title")))
         .then((querySnapshot) => {
             const mainDiv = document.createElement("div");
 

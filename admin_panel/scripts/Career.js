@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB } from './configurations.js';
 
 // Function to open the "Add Career" form
@@ -63,7 +63,7 @@ cancelAddCareerButton.addEventListener("click", () => {
 function getAllUsers() {
     const inquiriesCollection = collection(firestoreDB, "Careers");
 
-    getDocs(inquiriesCollection)
+    getDocs(query(inquiriesCollection, orderBy("title")))
         .then((querySnapshot) => {
             const inquiryList = document.getElementById("career-list");
             inquiryList.innerHTML = ""; // Clear existing content

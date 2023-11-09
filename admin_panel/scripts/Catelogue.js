@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB, storage } from './configurations.js';
 import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
 
@@ -70,7 +70,7 @@ function addCatalogueToFirestore(applicationData, collectionName) {
 function getAllFoodTypes() {
     const inquiriesCollection = collection(firestoreDB, "food_types");
 
-    getDocs(inquiriesCollection)
+    getDocs(query(inquiriesCollection, orderBy("title")))
         .then((querySnapshot) => {
             const foodList = document.getElementById("food-list");
             foodList.innerHTML = ""; // Clear existing content

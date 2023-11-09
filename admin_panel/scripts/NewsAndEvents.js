@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB, storage } from './configurations.js';
 import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
 
@@ -70,7 +70,7 @@ function addToFirestore(applicationData) {
 function getNewsAndEvents() {
     const itemsCollection = collection(firestoreDB, "news_and_events");
 
-    getDocs(itemsCollection)
+    getDocs(query(itemsCollection, orderBy("title")))
         .then((querySnapshot) => {
             const foodList = document.getElementById("data-list");
             foodList.innerHTML = ""; // Clear existing content

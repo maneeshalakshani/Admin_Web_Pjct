@@ -1,10 +1,10 @@
-import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB } from './configurations.js';
 
 function getAllFAQ() {
     const inquiriesCollection = collection(firestoreDB, "FAQ");
 
-    getDocs(inquiriesCollection)
+    getDocs(query(inquiriesCollection, orderBy("question")))
         .then((querySnapshot) => {
             const faqList = document.getElementById("faqList");
             faqList.innerHTML = ""; // Clear existing content
