@@ -1,6 +1,18 @@
 import { collection, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB } from './configurations.js';
 
+
+// BACK BUTTON =====================================================================================
+// Add an event listener to the back button
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    // Navigate to the previous page
+    window.history.back();
+});
+
+
+
 function getAllInquiries() {
     const inquiriesCollection = collection(firestoreDB, "Inquiry");
 

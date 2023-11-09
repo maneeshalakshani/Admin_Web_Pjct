@@ -2,6 +2,21 @@ import { get, ref, child, set, query } from "https://www.gstatic.com/firebasejs/
 import { collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { db, firestoreDB, auth } from './configurations.js';
 
+
+// BACK BUTTON =====================================================================================
+// Add an event listener to the back button
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    // Navigate to the previous page
+    window.history.back();
+});
+
+
+
+
+
+
 //================ GET ALL PENDING ORDERS ===========================================================================
 function getAllPendingOrders() {
     const dbRef = ref(db);

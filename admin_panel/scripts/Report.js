@@ -2,6 +2,21 @@ import { ref, onChildAdded, query, equalTo, orderByChild } from "https://www.gst
 import { collection, getDocs, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { db, firestoreDB } from './configurations.js';
 
+
+// BACK BUTTON =====================================================================================
+// Add an event listener to the back button
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    // Navigate to the previous page
+    window.history.back();
+});
+
+
+
+
+
+
 // Function to fetch and display completed orders in the table
 function fetchAndDisplayCompletedOrders() {
   // Reference to the 'Orders' node in the Realtime Database

@@ -1,6 +1,25 @@
 import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB } from './configurations.js';
 
+
+
+
+// BACK BUTTON =====================================================================================
+// Add an event listener to the back button
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    // Navigate to the previous page
+    window.history.back();
+});
+
+
+
+
+
+
+
+
 // Function to open the "Add Career" form
 function openAddCareerForm() {
     // Display the add form and hide the edit form

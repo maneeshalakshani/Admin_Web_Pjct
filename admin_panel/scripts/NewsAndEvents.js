@@ -3,6 +3,18 @@ import { firestoreDB, storage } from './configurations.js';
 import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
 
 
+// BACK BUTTON =====================================================================================
+// Add an event listener to the back button
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    // Navigate to the previous page
+    window.history.back();
+});
+
+
+
+
 // ADD NEWS ================================================================================
 const addCatalogueBtn = document.getElementById("news-add-button");
 addCatalogueBtn.addEventListener("click", function () {

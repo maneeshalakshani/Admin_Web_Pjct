@@ -11,16 +11,34 @@ body {
 }
 
 
+/* Style for the back button */
+.back-button {
+    background-color: rgb(234, 234, 83);
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px; /* Move the button to the left */
+}
+
+.back-button:hover {
+    background-color: rgb(220, 220, 59);
+}
+
 header {
     background-color: #F5631A;
     color: #fff;
-    padding: 20px 0;
-    text-align: center;
+    padding: 20px;
+    display: flex;
+    align-items: center;
 }
 
 header h1 {
     font-size: 36px;
-    margin-bottom: 10px;
+    margin: 10px 0;
+    flex: 1; /* Let the header text take the available space, centering it */
+    text-align: center; /* Center align the text within the space */
 }
 
 
