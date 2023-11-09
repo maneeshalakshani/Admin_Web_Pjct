@@ -413,3 +413,7 @@ button {
 .pendingOrdersBtn:hover {
   background-color: #d1571a;
 }
+
+.logo-icon{
+  height: 10vh;
+}
