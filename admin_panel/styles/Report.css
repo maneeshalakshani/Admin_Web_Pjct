@@ -146,3 +146,10 @@ th {
 .report-div{
     margin-top: 50px;
 }
+
+.report-month{
+    color: #fff;
+    margin: 10px 0 10px 0;
+    bottom: 0;
+    right: 0;
+}
