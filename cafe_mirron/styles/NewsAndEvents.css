@@ -1,0 +1,115 @@
+body{
+    margin: 20px;
+    background: linear-gradient(
+       to right,
+       black,
+       chocolate,
+       orange,
+       white
+    ) ;
+ }
+
+ .intro-section {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .category {
+    background-color: black; /* The last value (0.5) controls opacity (0.0 to 1.0) */
+    padding: 30px 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    
+  }
+  
+  .category-title {
+    font-size: 24px;
+    color: aliceblue;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  .category-description {
+    text-align: center;
+    font-size: 16px;
+    margin: 20px 0;
+    color: aliceblue;
+  }
+
+  .main-image {
+    /* max-width: 100%;
+    width: 80%; */
+    /* height: auto; */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .menu-section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+
+
+  .nav{
+           
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    right: 0;
+    left: 0;
+    background-color: black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+ }
+
+ .nav .logo img{
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  margin: 7px 0;
+ }
+
+ .nav a:hover{
+    color: chocolate;
+    transition: .4s;
+ }
+ .nav ul{
+    display: flex;
+    list-style: none;
+ }
+ .nav ul li{
+  display: inline-block;
+  margin: 0 15px;
+ }
+ .nav ul li a{
+  text-decoration: none;
+  color: aliceblue;
+  font-weight: 500;
+  font-size: 17px;  
+ }
+
+ .nav ul li a::after{
+    content: '';
+    width: 0;
+    height: 2px;
+    background-color: chocolate;
+    display: block;
+    transition: 0.2s linear;
+ }
+
+ .nav ul li a:hover::after{
+    width: 100%;
+ }
+
+ .WhatsApp{
+    position: fixed;
+    bottom: 20px;
+    left: 20px;  
+  }

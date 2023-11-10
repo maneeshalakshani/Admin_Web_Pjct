@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="styles/NewsAndEvents.css">
+        <link rel="stylesheet" href="C:\Users\Ama\Downloads/icon.svg">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>News</title>
+
+        <!-- Firebase App SDKs -->
+        <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+        <!-- Firebase Realtime Database SDK -->
+        <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+        <!-- Firebase Firestore SDK -->
+        <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+        <script type="module" src="scripts/NewsAndevents.js"></script>
+    </head>
+    <body>
+     <section class="menu">
+        <div class="nav">
+            <div class="logo">
+            <img 
+                src="https://firebasestorage.googleapis.com/v0/b/cafemironapp.appspot.com/o/logo.png?alt=media&token=d77b8e19-24cd-4523-9e5d-2632d655ca91&_gl=1*qa6ily*_ga*MTY1MTk2NTQyLjE2OTcwNDc2OTM.*_ga_CW55HF8NVT*MTY5ODk2NDU4NC43NS4xLjE2OTg5NjUzNzcuNDUuMC4w" 
+                width="200" 
+                height="200"
+            >
+            </div>
+            <div class="WhatsApp ">
+                <a href=" https://wa.me/910783142070" target="_blank">
+                    <img src="images/WhatsApp.jpg" width="50" alt="">
+                </a>
+            </div>
+            <ul>
+                <li><a href="home.html">HOME</a></li>
+                <li><a href="#">OUR STORY</a></li>
+                <li><a href="#">CONTACT US</a></li>
+                <li><a href="news_and_event.html">NEWS & EVENTS </a></li>
+                <li><a href="career.html">CAREERS</a></li>
+            </ul>
+        </div>
+         
+     </section>
+
+
+        <div class="menu-items" id="menu-items-container" style="margin: 0 100px;">
+            <div class="intro-section" id="intro-section-container">
+                <h1 class="cafe-name" id="cafe-name-heading">News And Events</h1>
+            </div>
+
+            <!--News will be inserted here dynamically -->
+            <div class="menu-section" id="news-section-container">No News</div>
+        </div>    
+         
+    </body>
+</html>
