@@ -1,5 +1,21 @@
-import { ref, onChildAdded, query, equalTo, orderByChild, startAt, endAt } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
-import { db } from './configurations.js';
+import { ref, onChildAdded, query, equalTo, orderByChild } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+import { collection, getDocs, query as firestoreQuery } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { db, firestoreDB } from './configurations.js';
+
+
+// BACK BUTTON =====================================================================================
+// Add an event listener to the back button
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    // Navigate to the previous page
+    window.history.back();
+});
+
+
+
+
+
 
 // Function to fetch and display completed orders in the table
 function fetchAndDisplayCompletedOrders() {
@@ -25,7 +41,7 @@ function fetchAndDisplayCompletedOrders() {
   thead.innerHTML = `
     <tr>
       <th>Order ID</th>
-      <th>User ID</th>
+      <th>Username</th>
       <th>Title</th>
       <th>Quantity</th>
       <th>Price</th>
@@ -34,11 +50,11 @@ function fetchAndDisplayCompletedOrders() {
     </tr>
   `;
 
-  function addOrderToTable(order) {
+  function addOrderToTable(order,userName) {
     var tableRow = `
         <tr>
           <td>${order.key}</td>
-          <td>${order.val().userid}</td>
+          <td>${userName}</td>
           <td>${order.val().title}</td>
           <td>${order.val().quantity}</td>
           <td>LKR ${order.val().price}</td>
@@ -50,8 +66,31 @@ function fetchAndDisplayCompletedOrders() {
   }
 
   // Event listener for the 'child_added' event to dynamically update the table
-  onChildAdded(completedOrdersQuery, (childSnapshot) => {
-    addOrderToTable(childSnapshot);
+  onChildAdded(completedOrdersQuery, async (childSnapshot) => {
+    const userId = childSnapshot.val().userid;
+
+    // Create a reference to the "users" collection
+    const usersCollection = collection(firestoreDB, "users");
+
+    // Create a query to fetch the user document where the ID matches
+    const userQuery = firestoreQuery(usersCollection, userId);
+
+    // Get the user document
+    getDocs(userQuery)
+      .then((querySnapshot) => {
+          if (!querySnapshot.empty) {
+              // Retrieve the user document
+              const userDoc = querySnapshot.docs[0];
+              const userData = userDoc.data();
+
+              addOrderToTable(childSnapshot, userData.userName);
+          } else {
+              console.log("User not found");
+          }
+      })
+      .catch((error) => {
+          console.error("Error fetching user document:", error);
+      });
   });
 
   // Append the table to the report-table div
@@ -59,6 +98,11 @@ function fetchAndDisplayCompletedOrders() {
   reportTableDiv.innerHTML = "";
   reportTableDiv.appendChild(table);
 }
+
+
+
+
+
 
 // Function to fetch and display completed orders in the table
 function fetchAndDisplayOutForDeliveryOrders() {
@@ -84,7 +128,7 @@ function fetchAndDisplayOutForDeliveryOrders() {
   thead.innerHTML = `
     <tr>
       <th>Order ID</th>
-      <th>User ID</th>
+      <th>Username</th>
       <th>Title</th>
       <th>Quantity</th>
       <th>Price</th>
@@ -94,11 +138,11 @@ function fetchAndDisplayOutForDeliveryOrders() {
   `;
 
   // Function to add a new row to the table
-  function addOrderToTable(order) {
+  function addOrderToTable(order, username) {
     var tableRow = `
       <tr>
         <td>${order.key}</td>
-        <td>${order.val().userid}</td>
+        <td>${username}</td>
         <td>${order.val().title}</td>
         <td>${order.val().quantity}</td>
         <td>LKR ${order.val().price}</td>
@@ -111,7 +155,30 @@ function fetchAndDisplayOutForDeliveryOrders() {
 
   // Event listener for the 'child_added' event to dynamically update the table
   onChildAdded(completedOrdersQuery, (childSnapshot) => {
-    addOrderToTable(childSnapshot);
+    const userId = childSnapshot.val().userid;
+
+    // Create a reference to the "users" collection
+    const usersCollection = collection(firestoreDB, "users");
+
+    // Create a query to fetch the user document where the ID matches
+    const userQuery = firestoreQuery(usersCollection, userId);
+
+    // Get the user document
+    getDocs(userQuery)
+      .then((querySnapshot) => {
+          if (!querySnapshot.empty) {
+              // Retrieve the user document
+              const userDoc = querySnapshot.docs[0];
+              const userData = userDoc.data();
+
+              addOrderToTable(childSnapshot, userData.userName);
+          } else {
+              console.log("User not found");
+          }
+      })
+      .catch((error) => {
+          console.error("Error fetching user document:", error);
+      });
   });
 
   // Append the table to the report-table div
@@ -128,6 +195,7 @@ function generatePDFReport(month) {
 
     var element = `<div class="reportHead">
         <h1 class="reportHeader">Order Summary</h1>
+        <h4 class="report-month">${getMonth(month)} Report</h4>
         <p class="reportDateTime">${currentDateTime}</p>
       </div>
       <h3 style="margin: 50px auto; width: 80%">Completed Orders</h3>
@@ -176,6 +244,37 @@ function generatePDFReport(month) {
 }
 
 
+function getMonth(monthInInt){
+  console.log(parseInt(monthInInt));
+  switch(parseInt(monthInInt)){
+    case 1: return "January"
+      break;
+    case 2: return "February"
+      break;
+    case 3: return "March"
+      break;
+    case 4: return "April"
+      break;
+    case 5: return "May"
+      break;
+    case 6: return "June"
+      break;
+    case 7: return "July"
+      break;
+    case 8: return "August"
+      break;
+    case 9: return "September"
+      break;
+    case 10: return "October"
+      break;
+    case 11: return "November"
+      break;
+    case 12: return "December"
+      break;
+    default: return "Whole Year"
+      break;
+  }
+}
 
 
 
@@ -223,7 +322,7 @@ document.getElementById('generatePdfButton').onclick = function () {
     }else{
       const currentDateTime = new Date().toLocaleString();
       console.log(currentDateTime);
-      generatePDFReport('8');
+      generatePDFReport('10');
     }
   });
 };

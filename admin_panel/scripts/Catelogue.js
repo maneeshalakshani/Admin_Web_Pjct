@@ -1,7 +1,26 @@
-import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB, storage } from './configurations.js';
 import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
 
+
+
+// BACK BUTTON =====================================================================================
+// Add an event listener to the back button
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    // Navigate to the previous page
+    window.history.back();
+});
+
+
+
+
+
+
+
+
+// ADD CATALOGUE ===================================================================================
 const addCatalogueBtn = document.getElementById("catalogue-add-button");
 addCatalogueBtn.addEventListener("click", function () {
     const modal = document.getElementById("addCatelogueModel");
@@ -70,7 +89,7 @@ function addCatalogueToFirestore(applicationData, collectionName) {
 function getAllFoodTypes() {
     const inquiriesCollection = collection(firestoreDB, "food_types");
 
-    getDocs(inquiriesCollection)
+    getDocs(query(inquiriesCollection, orderBy("title")))
         .then((querySnapshot) => {
             const foodList = document.getElementById("food-list");
             foodList.innerHTML = ""; // Clear existing content

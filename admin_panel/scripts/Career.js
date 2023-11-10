@@ -1,5 +1,24 @@
-import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { firestoreDB } from './configurations.js';
+
+
+
+
+// BACK BUTTON =====================================================================================
+// Add an event listener to the back button
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    // Navigate to the previous page
+    window.history.back();
+});
+
+
+
+
+
+
+
 
 // Function to open the "Add Career" form
 function openAddCareerForm() {
@@ -63,7 +82,7 @@ cancelAddCareerButton.addEventListener("click", () => {
 function getAllUsers() {
     const inquiriesCollection = collection(firestoreDB, "Careers");
 
-    getDocs(inquiriesCollection)
+    getDocs(query(inquiriesCollection, orderBy("title")))
         .then((querySnapshot) => {
             const inquiryList = document.getElementById("career-list");
             inquiryList.innerHTML = ""; // Clear existing content

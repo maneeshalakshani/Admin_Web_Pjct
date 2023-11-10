@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Events</title>
+    <link rel="stylesheet" href="styles/Catalogue.css">
+
+    <!-- Firebase App SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+    <!-- Firebase Realtime Database SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+    <!-- Firebase Firestore SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+    <!-- Your JavaScript file (index.js) -->
+    <script type="module" src="scripts/NewsAndEvents.js"></script>
+</head>
+<body>
+    <header>
+        <button id="backButton" class="back-button">Back</button>
+        <h1 style="color: white;">Manage News & Events</h1>
+    </header>
+    <div class="container">
+        <button class="add-button" id="news-add-button" style="margin-bottom: 20px;">Add News</button>
+        <div id="data-list">No Data</div>
+    </div>
+
+    <!-- The Add Catalogue Modal -->
+    <div id="addModel" class="modal">
+        <div class="modal-content">
+            <span class="close" id="news-close-modal">&times;</span>
+            <h2>Add News</span></h2>
+            <form id="news-form" class="food-form">
+                <!-- <div class="form-control">
+                    <div class="labelClass"><label for="thumbnail-url">Thumbnail URL</label></div>
+                    <input type="text" id="catalogue-thumbnail-url" name="thumbnail-url" class="input-field">
+                </div> -->
+                <div class="form-control">
+                    <div class="labelClass"><label for="newsImage">Upload Image (PNG, JPG, JPEG)</label></div>
+                    <input type="file" id="newsImage" name="newsImage" accept=".png, .jpg, .jpeg" required>
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="catalogue-message">Message</label></div>
+                    <input type="text" id="catalogue-message" name="catalogue-message" class="input-field">
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="news-title">Title</label></div>
+                    <input type="text" id="news-title" name="news-title" class="input-field">
+                </div>
+                <button type="submit" class="submit-button">Add News</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- The Edit Catalogue Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-edit-modal">&times;</span>
+            <h2>Edit News</h2>
+            <form id="edit-catalogue-form" class="food-form">
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-thumbnail-url">Catalogue Image Link</label></div>
+                    <input type="text" id="edit-thumbnail-url" name="thumbnail-url" class="input-field disable-input" readonly>
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-image">Update Image (PNG, JPG, JPEG)</label></div>
+                    <input type="file" id="edit-image" name="edit-image" accept=".png, .jpg, .jpeg">
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-title">Title</label></div>
+                    <input type="text" id="edit-title" name="title" class="input-field">
+                </div>
+                <div class="form-control">
+                    <div class="labelClass"><label for="edit-description">Message</label></div>
+                    <input type="text" id="edit-description" name="edit-description" class="input-field">
+                </div>
+                <input type="text" id="edit-doc-id" name="title" class="input-field" style="display: none;">
+                <button type="submit" class="submit-button">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
