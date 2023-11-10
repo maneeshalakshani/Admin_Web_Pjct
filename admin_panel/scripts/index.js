@@ -56,6 +56,7 @@ function getAllOrders() {
             const table = document.getElementById("ordersTable");
 
             let completedOrdersCount = 0;
+            let pendingOrdersCount = 0;
 
             table.innerHTML = `
             <tr>
@@ -146,7 +147,7 @@ function getAllOrders() {
                             updateStatusButton.classList.add("btn", "btn-primary", "update-status-button"); // Add classes for styling
                             updateStatusButton.addEventListener("click", () => {
                                 const newStatus = orderStatusDropdown.value;
-                                updateOrderStatus(key, newStatus);
+                                updateOrderStatus(order.orderid, newStatus);
                             });
 
                             StatusChangeDiv.appendChild(orderStatusDropdown);
@@ -156,6 +157,8 @@ function getAllOrders() {
 
                             if (order.orderStatus.toLowerCase() === 'completed') {
                                 completedOrdersCount++;
+                            }else if(order.orderStatus.toLowerCase() === 'pending'){
+                                pendingOrdersCount++;
                             }
                         } else {
                             console.log("User data does not contain a 'userName' field.");
@@ -164,6 +167,7 @@ function getAllOrders() {
                         console.log("No user found with the provided ID.");
                     }
                     completedOrders.innerHTML = completedOrdersCount;
+                    noOfUsers.innerHTML = pendingOrdersCount;
                 })
                 .catch((error) => {
                     console.error("Error getting user by ID:", error);

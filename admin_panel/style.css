@@ -417,3 +417,10 @@ button {
 .logo-icon{
   height: 10vh;
 }
+
+.manage-order-table-div{
+  /* height: 45vh;  */
+  max-height: 85vh; 
+  overflow-y: auto;
+}
+
