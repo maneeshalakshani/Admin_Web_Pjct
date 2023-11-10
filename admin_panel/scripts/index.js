@@ -67,92 +67,107 @@ function getAllOrders() {
                 <th>Action</th>
             </tr>`;
 
+            const ordersArray = [];
+
             for (const key in data) {
                 if (data.hasOwnProperty(key)) {
                     const order = data[key];
 
+                    if (order.orderStatus.toLowerCase() !== 'delivered') {
+                        ordersArray.push(order);
+                    }
+                }
+            }
 
-                    const usersCollection = collection(firestoreDB, "users");
-                    const userDocRef = doc(usersCollection, order.userid);
+            // Sort orders by timestamp (oldest to newest)
+            ordersArray.sort((a, b) => {
+                const timestampA = new Date(a.timestamp);
+                const timestampB = new Date(b.timestamp);
+                return timestampA - timestampB;
+            });
 
-                    getDoc(userDocRef)
-                    .then((docSnapshot) => {
-                        if (docSnapshot.exists()) {
-                            const userData = docSnapshot.data();
-                            if (userData && userData.userName) {
-                                const userName = userData.userName;
-                                const userAddress = userData.residentialAddress;
-                                
-                                const row = table.insertRow(-1);
+            for (const order of ordersArray) {
+                const usersCollection = collection(firestoreDB, "users");
+                const userDocRef = doc(usersCollection, order.userid);
 
-                                const titleCell = row.insertCell(0);
-                                const userNameCell = row.insertCell(1);
-                                const addressCell = row.insertCell(2);
-                                const priceCell = row.insertCell(3);
-                                const orderStatusCell = row.insertCell(4);
-                                const actionCell = row.insertCell(5);
+                getDoc(userDocRef)
+                .then((docSnapshot) => {
+                    if (docSnapshot.exists()) {
+                        const userData = docSnapshot.data();
+                        if (userData && userData.userName) {
+                            const userName = userData.userName;
+                            const userAddress = userData.residentialAddress;
 
-                                titleCell.innerHTML = order.quantity + " * " + order.title;
-                                userNameCell.innerHTML = userName;
-                                addressCell.innerHTML = userAddress;
+                            const row = table.insertRow(-1);
 
-                                const statusText = document.createElement("p");
-                                statusText.innerHTML = order.orderStatus == 'out_for_delivery' ? "Out For Delivery" : order.orderStatus;
-                                statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : order.orderStatus == 'out_for_delivery' ? '#339FFF' : 'purple';
-                                orderStatusCell.appendChild(statusText);
+                            const titleCell = row.insertCell(0);
+                            const userNameCell = row.insertCell(1);
+                            const addressCell = row.insertCell(2);
+                            const priceCell = row.insertCell(3);
+                            const orderStatusCell = row.insertCell(4);
+                            const actionCell = row.insertCell(5);
 
-                                // quantityCell.innerHTML = order.quantity;
-                                priceCell.innerHTML = order.selectedDeliveryOption;
+                            titleCell.innerHTML = order.quantity + " * " + order.title;
+                            userNameCell.innerHTML = userName;
+                            addressCell.innerHTML = userAddress;
 
-                                const StatusChangeDiv = document.createElement("div");
+                            const statusText = document.createElement("p");
+                            statusText.innerHTML = order.orderStatus == 'out_for_delivery' 
+                                ? "Out For Delivery" 
+                                : order.orderStatus.charAt(0).toUpperCase() + order.orderStatus.slice(1);
+                            statusText.style.color = order.orderStatus == "completed" ? 'green' : order.orderStatus == 'pending' ? 'orange' : order.orderStatus == 'out_for_delivery' ? '#339FFF' : order.orderStatus == 'delivered' ? '#E64A19' : 'purple';
+                            orderStatusCell.appendChild(statusText);
 
-                                // Create a dropdown for changing order status
-                                const orderStatusDropdown = document.createElement("select");
-                                orderStatusDropdown.className = "order-status-dropdown";
+                            // quantityCell.innerHTML = order.quantity;
+                            priceCell.innerHTML = order.selectedDeliveryOption;
 
-                                const orderStatuses = ['pending', 'processing', 'completed', 'out_for_delivery'];
-                                const currentStatusIndex = orderStatuses.indexOf(order.orderStatus.toLowerCase());
+                            const StatusChangeDiv = document.createElement("div");
 
-                                orderStatusDropdown.innerHTML = orderStatuses
-                                .map((status, index) => {
-                                    if (index < currentStatusIndex) {
-                                    return `<option value="${status}" disabled>${status}</option>`;
-                                    } else {
-                                    return `<option value="${status}" ${index === currentStatusIndex ? 'selected' : ''}>${status}</option>`;
-                                    }
-                                })
-                                .join('');
+                            // Create a dropdown for changing order status
+                            const orderStatusDropdown = document.createElement("select");
+                            orderStatusDropdown.className = "order-status-dropdown";
 
+                            const orderStatuses = ['pending', 'processing', 'completed', 'out_for_delivery', 'delivered'];
+                            const currentStatusIndex = orderStatuses.indexOf(order.orderStatus.toLowerCase());
 
-                                // Button to update order status
-                                const updateStatusButton = document.createElement("button");
-                                updateStatusButton.textContent = "Update Status";
-                                updateStatusButton.classList.add("btn", "btn-primary", "update-status-button"); // Add classes for styling
-                                updateStatusButton.addEventListener("click", () => {
-                                    const newStatus = orderStatusDropdown.value;
-                                    updateOrderStatus(key, newStatus);
-                                });
-
-                                StatusChangeDiv.appendChild(orderStatusDropdown);
-                                StatusChangeDiv.appendChild(updateStatusButton)
-
-                                actionCell.appendChild(StatusChangeDiv);
-
-                                if (order.orderStatus.toLowerCase() === 'completed') {
-                                    completedOrdersCount++;
+                            orderStatusDropdown.innerHTML = orderStatuses
+                            .map((status, index) => {
+                                if (index < currentStatusIndex) {
+                                return `<option value="${status}" disabled>${status}</option>`;
+                                } else {
+                                return `<option value="${status}" ${index === currentStatusIndex ? 'selected' : ''}>${status}</option>`;
                                 }
-                            } else {
-                                console.log("User data does not contain a 'userName' field.");
+                            })
+                            .join('');
+
+                            // Button to update order status
+                            const updateStatusButton = document.createElement("button");
+                            updateStatusButton.textContent = "Update Status";
+                            updateStatusButton.classList.add("btn", "btn-primary", "update-status-button"); // Add classes for styling
+                            updateStatusButton.addEventListener("click", () => {
+                                const newStatus = orderStatusDropdown.value;
+                                updateOrderStatus(key, newStatus);
+                            });
+
+                            StatusChangeDiv.appendChild(orderStatusDropdown);
+                            StatusChangeDiv.appendChild(updateStatusButton)
+
+                            actionCell.appendChild(StatusChangeDiv);
+
+                            if (order.orderStatus.toLowerCase() === 'completed') {
+                                completedOrdersCount++;
                             }
                         } else {
-                            console.log("No user found with the provided ID.");
+                            console.log("User data does not contain a 'userName' field.");
                         }
-                        completedOrders.innerHTML = completedOrdersCount;
-                    })
-                    .catch((error) => {
-                        console.error("Error getting user by ID:", error);
-                    });
-                }
+                    } else {
+                        console.log("No user found with the provided ID.");
+                    }
+                    completedOrders.innerHTML = completedOrdersCount;
+                })
+                .catch((error) => {
+                    console.error("Error getting user by ID:", error);
+                });
             }
         } else {
             alert("No data found");
@@ -160,6 +175,13 @@ function getAllOrders() {
     })
     .catch((error) => {
         alert(error);
+    });
+}
+
+
+function toCamelCase(word) {
+    return word.replace(/[-_](.)/g, function(match, group1) {
+        return group1.toUpperCase();
     });
 }
 
